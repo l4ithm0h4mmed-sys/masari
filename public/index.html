@@ -7,6 +7,8 @@
 <meta name="description" content="أنشئ سيرتك الذاتية الاحترافية للسوق السعودي في دقيقتين بالذكاء الاصطناعي" />
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@300;400;500;600&display=swap" rel="stylesheet" />
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 <style>
   :root {
     --green: #1D9E75;
@@ -24,596 +26,98 @@
     --radius-sm: 8px;
     --shadow: 0 1px 3px rgba(0,0,0,0.06), 0 4px 16px rgba(0,0,0,0.04);
   }
-
   * { box-sizing: border-box; margin: 0; padding: 0; }
-
-  body {
-    font-family: 'IBM Plex Sans Arabic', sans-serif;
-    background: var(--bg);
-    color: var(--text);
-    min-height: 100vh;
-    direction: rtl;
-  }
-
-  /* NAV */
-  nav {
-    background: var(--surface);
-    border-bottom: 1px solid var(--border);
-    padding: 0 1.5rem;
-    height: 56px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    position: sticky;
-    top: 0;
-    z-index: 100;
-  }
-
-  .logo {
-    font-size: 20px;
-    font-weight: 600;
-    color: var(--text);
-    letter-spacing: -0.5px;
-  }
-
+  body { font-family: 'IBM Plex Sans Arabic', sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; direction: rtl; }
+  nav { background: var(--surface); border-bottom: 1px solid var(--border); padding: 0 1.5rem; height: 56px; display: flex; align-items: center; justify-content: space-between; position: sticky; top: 0; z-index: 100; }
+  .logo { font-size: 20px; font-weight: 600; color: var(--text); letter-spacing: -0.5px; }
   .logo-dot { color: var(--green); }
-
-  .nav-badge {
-    font-size: 11px;
-    background: var(--green-light);
-    color: var(--green-dark);
-    padding: 3px 10px;
-    border-radius: 20px;
-    font-weight: 500;
-  }
-
-  /* HERO */
-  .hero {
-    text-align: center;
-    padding: 3rem 1rem 2rem;
-    max-width: 600px;
-    margin: 0 auto;
-  }
-
-  .hero-tag {
-    display: inline-block;
-    background: var(--green-light);
-    color: var(--green-dark);
-    font-size: 12px;
-    font-weight: 500;
-    padding: 4px 14px;
-    border-radius: 20px;
-    margin-bottom: 1rem;
-  }
-
-  .hero h1 {
-    font-size: clamp(24px, 5vw, 36px);
-    font-weight: 600;
-    color: var(--text);
-    line-height: 1.3;
-    margin-bottom: 0.75rem;
-    letter-spacing: -0.5px;
-  }
-
+  .nav-badge { font-size: 11px; background: var(--green-light); color: var(--green-dark); padding: 3px 10px; border-radius: 20px; font-weight: 500; }
+  .hero { text-align: center; padding: 3rem 1rem 2rem; max-width: 600px; margin: 0 auto; }
+  .hero-tag { display: inline-block; background: var(--green-light); color: var(--green-dark); font-size: 12px; font-weight: 500; padding: 4px 14px; border-radius: 20px; margin-bottom: 1rem; }
+  .hero h1 { font-size: clamp(24px, 5vw, 36px); font-weight: 600; color: var(--text); line-height: 1.3; margin-bottom: 0.75rem; }
   .hero h1 span { color: var(--green); }
-
-  .hero p {
-    font-size: 15px;
-    color: var(--text-muted);
-    line-height: 1.7;
-    margin-bottom: 1.5rem;
-  }
-
-  .stats {
-    display: flex;
-    gap: 1.5rem;
-    justify-content: center;
-    flex-wrap: wrap;
-    margin-bottom: 2rem;
-  }
-
-  .stat {
-    text-align: center;
-  }
-
-  .stat-num {
-    font-size: 20px;
-    font-weight: 600;
-    color: var(--green);
-  }
-
-  .stat-label {
-    font-size: 11px;
-    color: var(--text-faint);
-    margin-top: 2px;
-  }
-
-  /* MAIN LAYOUT */
-  .container {
-    max-width: 720px;
-    margin: 0 auto;
-    padding: 0 1rem 4rem;
-  }
-
-  /* PROGRESS */
-  .progress-wrap {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: var(--radius);
-    padding: 1rem 1.25rem;
-    margin-bottom: 1rem;
-    display: flex;
-    align-items: center;
-    gap: 0.75rem;
-  }
-
-  .progress-steps {
-    display: flex;
-    gap: 6px;
-    flex: 1;
-  }
-
-  .p-step {
-    flex: 1;
-    height: 4px;
-    border-radius: 2px;
-    background: var(--border);
-    transition: background 0.4s;
-  }
-
+  .hero p { font-size: 15px; color: var(--text-muted); line-height: 1.7; margin-bottom: 1.5rem; }
+  .stats { display: flex; gap: 1.5rem; justify-content: center; flex-wrap: wrap; margin-bottom: 2rem; }
+  .stat { text-align: center; }
+  .stat-num { font-size: 20px; font-weight: 600; color: var(--green); }
+  .stat-label { font-size: 11px; color: var(--text-faint); margin-top: 2px; }
+  .container { max-width: 720px; margin: 0 auto; padding: 0 1rem 4rem; }
+  .progress-wrap { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 1rem 1.25rem; margin-bottom: 1rem; display: flex; align-items: center; gap: 0.75rem; }
+  .progress-steps { display: flex; gap: 6px; flex: 1; }
+  .p-step { flex: 1; height: 4px; border-radius: 2px; background: var(--border); transition: background 0.4s; }
   .p-step.active { background: var(--green); }
-
-  .progress-text {
-    font-size: 12px;
-    color: var(--text-muted);
-    white-space: nowrap;
-  }
-
-  /* CARDS */
-  .card {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: var(--radius);
-    padding: 1.5rem;
-    margin-bottom: 1rem;
-    box-shadow: var(--shadow);
-  }
-
-  .card-head {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    margin-bottom: 1.25rem;
-  }
-
-  .card-icon {
-    width: 32px;
-    height: 32px;
-    background: var(--green-light);
-    border-radius: var(--radius-sm);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 15px;
-    flex-shrink: 0;
-  }
-
-  .card-title {
-    font-size: 15px;
-    font-weight: 600;
-    color: var(--text);
-  }
-
-  .card-sub {
-    font-size: 12px;
-    color: var(--text-faint);
-    margin-top: 2px;
-  }
-
-  /* FIELDS */
+  .progress-text { font-size: 12px; color: var(--text-muted); white-space: nowrap; }
+  .card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 1.5rem; margin-bottom: 1rem; box-shadow: var(--shadow); }
+  .card-head { display: flex; align-items: center; gap: 10px; margin-bottom: 1.25rem; }
+  .card-icon { width: 32px; height: 32px; background: var(--green-light); border-radius: var(--radius-sm); display: flex; align-items: center; justify-content: center; font-size: 15px; flex-shrink: 0; }
+  .card-title { font-size: 15px; font-weight: 600; color: var(--text); }
+  .card-sub { font-size: 12px; color: var(--text-faint); margin-top: 2px; }
   .grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
-  .grid3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px; }
-
-  @media (max-width: 480px) {
-    .grid2, .grid3 { grid-template-columns: 1fr; }
-  }
-
+  @media (max-width: 480px) { .grid2 { grid-template-columns: 1fr; } }
   .field { display: flex; flex-direction: column; gap: 6px; }
-
-  .field label {
-    font-size: 12px;
-    font-weight: 500;
-    color: var(--text-muted);
-  }
-
-  .field input,
-  .field select,
-  .field textarea {
-    width: 100%;
-    padding: 10px 13px;
-    border: 1px solid var(--border-strong);
-    border-radius: var(--radius-sm);
-    font-family: 'IBM Plex Sans Arabic', sans-serif;
-    font-size: 14px;
-    color: var(--text);
-    background: var(--surface);
-    direction: rtl;
-    transition: border-color 0.2s;
-    outline: none;
-  }
-
-  .field input:focus,
-  .field select:focus,
-  .field textarea:focus {
-    border-color: var(--green);
-    box-shadow: 0 0 0 3px rgba(29,158,117,0.1);
-  }
-
-  .field textarea {
-    resize: vertical;
-    min-height: 80px;
-    line-height: 1.6;
-  }
-
-  /* BUTTONS */
-  .btn-primary {
-    width: 100%;
-    padding: 13px;
-    background: var(--green);
-    color: white;
-    border: none;
-    border-radius: var(--radius-sm);
-    font-family: 'IBM Plex Sans Arabic', sans-serif;
-    font-size: 15px;
-    font-weight: 600;
-    cursor: pointer;
-    transition: background 0.2s, transform 0.1s;
-    margin-top: 0.5rem;
-  }
-
+  .field label { font-size: 12px; font-weight: 500; color: var(--text-muted); }
+  .field input, .field select, .field textarea { width: 100%; padding: 10px 13px; border: 1px solid var(--border-strong); border-radius: var(--radius-sm); font-family: 'IBM Plex Sans Arabic', sans-serif; font-size: 14px; color: var(--text); background: var(--surface); direction: rtl; transition: border-color 0.2s; outline: none; }
+  .field input:focus, .field select:focus, .field textarea:focus { border-color: var(--green); box-shadow: 0 0 0 3px rgba(29,158,117,0.1); }
+  .field textarea { resize: vertical; min-height: 80px; line-height: 1.6; }
+  .btn-primary { width: 100%; padding: 13px; background: var(--green); color: white; border: none; border-radius: var(--radius-sm); font-family: 'IBM Plex Sans Arabic', sans-serif; font-size: 15px; font-weight: 600; cursor: pointer; transition: background 0.2s; margin-top: 0.5rem; }
   .btn-primary:hover { background: var(--green-dark); }
-  .btn-primary:active { transform: scale(0.99); }
-
-  .btn-primary:disabled {
-    background: var(--green-mid);
-    cursor: not-allowed;
-    transform: none;
-  }
-
-  .btn-secondary {
-    width: 100%;
-    padding: 11px;
-    background: transparent;
-    color: var(--text-muted);
-    border: 1px solid var(--border-strong);
-    border-radius: var(--radius-sm);
-    font-family: 'IBM Plex Sans Arabic', sans-serif;
-    font-size: 14px;
-    cursor: pointer;
-    transition: background 0.2s;
-    margin-top: 6px;
-  }
-
+  .btn-primary:disabled { background: var(--green-mid); cursor: not-allowed; }
+  .btn-secondary { width: 100%; padding: 11px; background: transparent; color: var(--text-muted); border: 1px solid var(--border-strong); border-radius: var(--radius-sm); font-family: 'IBM Plex Sans Arabic', sans-serif; font-size: 14px; cursor: pointer; margin-top: 6px; }
   .btn-secondary:hover { background: var(--bg); }
-
-  /* LOADING */
-  .loading-wrap {
-    text-align: center;
-    padding: 4rem 1rem;
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: var(--radius);
-    box-shadow: var(--shadow);
-  }
-
-  .spinner-ring {
-    width: 44px;
-    height: 44px;
-    border: 3px solid var(--green-light);
-    border-top-color: var(--green);
-    border-radius: 50%;
-    animation: spin 0.9s linear infinite;
-    margin: 0 auto 1.25rem;
-  }
-
+  .loading-wrap { text-align: center; padding: 4rem 1rem; background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); }
+  .spinner-ring { width: 44px; height: 44px; border: 3px solid var(--green-light); border-top-color: var(--green); border-radius: 50%; animation: spin 0.9s linear infinite; margin: 0 auto 1.25rem; }
   @keyframes spin { to { transform: rotate(360deg); } }
-
-  .loading-title {
-    font-size: 16px;
-    font-weight: 600;
-    color: var(--text);
-    margin-bottom: 6px;
-  }
-
-  .loading-sub {
-    font-size: 13px;
-    color: var(--text-muted);
-    line-height: 1.6;
-  }
-
-  .loading-steps {
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
-    margin-top: 1.5rem;
-    text-align: right;
-    max-width: 260px;
-    margin-left: auto;
-    margin-right: auto;
-  }
-
-  .load-step {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    font-size: 12px;
-    color: var(--text-faint);
-    transition: color 0.3s;
-  }
-
+  .loading-title { font-size: 16px; font-weight: 600; color: var(--text); margin-bottom: 6px; }
+  .loading-sub { font-size: 13px; color: var(--text-muted); line-height: 1.6; }
+  .loading-steps { display: flex; flex-direction: column; gap: 8px; margin-top: 1.5rem; text-align: right; max-width: 260px; margin-left: auto; margin-right: auto; }
+  .load-step { display: flex; align-items: center; gap: 8px; font-size: 12px; color: var(--text-faint); transition: color 0.3s; }
   .load-step.done { color: var(--green); }
-
-  .load-dot {
-    width: 6px;
-    height: 6px;
-    border-radius: 50%;
-    background: var(--border-strong);
-    flex-shrink: 0;
-    transition: background 0.3s;
-  }
-
+  .load-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--border-strong); flex-shrink: 0; transition: background 0.3s; }
   .load-step.done .load-dot { background: var(--green); }
-
-  /* CV RESULT */
-  .cv-result {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: var(--radius);
-    box-shadow: var(--shadow);
-    overflow: hidden;
-  }
-
-  .cv-preview {
-    padding: 1.5rem;
-    border-bottom: 1px solid var(--border);
-    filter: blur(3px);
-    pointer-events: none;
-    user-select: none;
-    position: relative;
-  }
-
-  .cv-preview::after {
-    content: '';
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    height: 80px;
-    background: linear-gradient(transparent, var(--surface));
-  }
-
-  .cv-header-block {
-    display: flex;
-    align-items: flex-start;
-    gap: 1rem;
-    padding-bottom: 1rem;
-    border-bottom: 2px solid var(--green);
-    margin-bottom: 1rem;
-  }
-
-  .cv-initials {
-    width: 50px;
-    height: 50px;
-    border-radius: 50%;
-    background: var(--green-light);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 16px;
-    font-weight: 600;
-    color: var(--green-dark);
-    flex-shrink: 0;
-  }
-
-  .cv-name-block .cv-fullname {
-    font-size: 18px;
-    font-weight: 600;
-    color: var(--text);
-  }
-
-  .cv-name-block .cv-role {
-    font-size: 13px;
-    color: var(--green);
-    margin-top: 3px;
-  }
-
-  .cv-name-block .cv-contact {
-    font-size: 11px;
-    color: var(--text-faint);
-    margin-top: 4px;
-    direction: ltr;
-    text-align: right;
-  }
-
-  .cv-section { margin-bottom: 1rem; }
-
-  .cv-sec-title {
-    font-size: 11px;
-    font-weight: 600;
-    color: var(--green);
-    letter-spacing: 0.5px;
-    text-transform: uppercase;
-    border-bottom: 1px solid var(--green-light);
-    padding-bottom: 4px;
-    margin-bottom: 8px;
-  }
-
-  .cv-text {
-    font-size: 12px;
-    color: var(--text-muted);
-    line-height: 1.7;
-  }
-
-  .cv-exp-item { margin-bottom: 8px; }
-  .cv-exp-title { font-size: 13px; font-weight: 600; color: var(--text); }
-  .cv-exp-meta { font-size: 11px; color: var(--text-faint); margin-top: 2px; }
-  .cv-exp-desc { font-size: 12px; color: var(--text-muted); margin-top: 4px; line-height: 1.6; }
-
-  .skill-pill {
-    display: inline-block;
-    background: var(--green-light);
-    color: var(--green-dark);
-    font-size: 11px;
-    padding: 3px 10px;
-    border-radius: 20px;
-    margin: 2px;
-    font-weight: 500;
-  }
-
-  /* PAYWALL */
-  .paywall {
-    padding: 1.5rem;
-    text-align: center;
-  }
-
-  .paywall-icon {
-    width: 48px;
-    height: 48px;
-    background: var(--green-light);
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin: 0 auto 1rem;
-    font-size: 20px;
-  }
-
-  .paywall h2 {
-    font-size: 18px;
-    font-weight: 600;
-    color: var(--text);
-    margin-bottom: 6px;
-  }
-
-  .paywall-sub {
-    font-size: 13px;
-    color: var(--text-muted);
-    margin-bottom: 1.5rem;
-    line-height: 1.6;
-  }
-
-  .price-block {
-    background: var(--bg);
-    border: 1px solid var(--border);
-    border-radius: var(--radius);
-    padding: 1.25rem;
-    margin-bottom: 1.25rem;
-    display: inline-block;
-    min-width: 200px;
-  }
-
-  .price-amount {
-    font-size: 36px;
-    font-weight: 600;
-    color: var(--text);
-    letter-spacing: -1px;
-  }
-
-  .price-cur {
-    font-size: 18px;
-    color: var(--text-muted);
-    font-weight: 400;
-  }
-
-  .price-period {
-    font-size: 13px;
-    color: var(--text-faint);
-    margin-top: 4px;
-  }
-
-  .price-hook {
-    font-size: 12px;
-    color: var(--green);
-    font-weight: 500;
-    margin-top: 6px;
-  }
-
-  .features-list {
-    list-style: none;
-    text-align: right;
-    margin-bottom: 1.5rem;
-    border: 1px solid var(--border);
-    border-radius: var(--radius);
-    overflow: hidden;
-  }
-
-  .features-list li {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    padding: 10px 1rem;
-    font-size: 13px;
-    color: var(--text-muted);
-    border-bottom: 1px solid var(--border);
-    justify-content: flex-end;
-  }
-
+  #cvPrintable { background: white; padding: 2rem; direction: rtl; font-family: 'IBM Plex Sans Arabic', sans-serif; }
+  .cv-result { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); box-shadow: var(--shadow); overflow: hidden; }
+  .cv-preview-wrap { position: relative; }
+  .cv-preview-wrap.blurred #cvPrintable { filter: blur(4px); pointer-events: none; user-select: none; }
+  .cv-preview-wrap.blurred::after { content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 120px; background: linear-gradient(transparent, white); pointer-events: none; }
+  .cv-header-block { display: flex; align-items: flex-start; justify-content: space-between; padding-bottom: 1rem; border-bottom: 3px solid var(--green); margin-bottom: 1rem; }
+  .cv-initials { width: 52px; height: 52px; border-radius: 50%; background: var(--green-light); display: flex; align-items: center; justify-content: center; font-size: 16px; font-weight: 600; color: var(--green-dark); flex-shrink: 0; }
+  .cv-fullname { font-size: 20px; font-weight: 600; color: #1A1A1A; }
+  .cv-role-text { font-size: 13px; color: var(--green); margin-top: 3px; font-weight: 500; }
+  .cv-contact-text { font-size: 11px; color: #6B6B6B; margin-top: 5px; direction: ltr; text-align: right; line-height: 1.6; }
+  .cv-section { margin-bottom: 1.25rem; }
+  .cv-sec-title { font-size: 11px; font-weight: 600; color: var(--green); letter-spacing: 0.5px; border-bottom: 1px solid var(--green-light); padding-bottom: 4px; margin-bottom: 10px; }
+  .cv-text { font-size: 13px; color: #444; line-height: 1.7; }
+  .cv-exp-item { margin-bottom: 10px; }
+  .cv-exp-title { font-size: 13px; font-weight: 600; color: #1A1A1A; }
+  .cv-exp-meta { font-size: 11px; color: #888; margin-top: 2px; }
+  .cv-exp-desc { font-size: 12px; color: #555; margin-top: 5px; line-height: 1.7; }
+  .skill-pill { display: inline-block; background: var(--green-light); color: var(--green-dark); font-size: 11px; padding: 3px 10px; border-radius: 20px; margin: 2px; font-weight: 500; }
+  .cv-lang-item { font-size: 12px; color: #555; margin-bottom: 4px; }
+  .paywall { padding: 1.5rem; text-align: center; border-top: 1px solid var(--border); }
+  .paywall-icon { width: 48px; height: 48px; background: var(--green-light); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 1rem; font-size: 20px; }
+  .paywall h2 { font-size: 18px; font-weight: 600; color: var(--text); margin-bottom: 6px; }
+  .paywall-sub { font-size: 13px; color: var(--text-muted); margin-bottom: 1.5rem; line-height: 1.6; }
+  .price-block { background: var(--bg); border: 1px solid var(--border); border-radius: var(--radius); padding: 1.25rem; margin-bottom: 1.25rem; display: inline-block; min-width: 200px; }
+  .price-amount { font-size: 36px; font-weight: 600; color: var(--text); }
+  .price-cur { font-size: 18px; color: var(--text-muted); font-weight: 400; }
+  .price-period { font-size: 13px; color: var(--text-faint); margin-top: 4px; }
+  .price-hook { font-size: 12px; color: var(--green); font-weight: 500; margin-top: 6px; }
+  .features-list { list-style: none; text-align: right; margin-bottom: 1.5rem; border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden; }
+  .features-list li { display: flex; align-items: center; gap: 10px; padding: 10px 1rem; font-size: 13px; color: var(--text-muted); border-bottom: 1px solid var(--border); justify-content: flex-end; }
   .features-list li:last-child { border-bottom: none; }
-
-  .feat-check {
-    width: 18px;
-    height: 18px;
-    background: var(--green-light);
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 10px;
-    color: var(--green-dark);
-    flex-shrink: 0;
-    font-weight: 700;
-  }
-
-  .pay-methods {
-    display: flex;
-    gap: 8px;
-    justify-content: center;
-    margin-top: 1rem;
-    flex-wrap: wrap;
-  }
-
-  .pay-method {
-    background: var(--bg);
-    border: 1px solid var(--border-strong);
-    border-radius: var(--radius-sm);
-    padding: 5px 14px;
-    font-size: 12px;
-    color: var(--text-muted);
-    font-weight: 500;
-  }
-
-  .error-box {
-    background: #FEF2F2;
-    border: 1px solid #FECACA;
-    border-radius: var(--radius-sm);
-    padding: 12px 1rem;
-    font-size: 13px;
-    color: #B91C1C;
-    margin-bottom: 1rem;
-    text-align: center;
-  }
-
+  .feat-check { width: 18px; height: 18px; background: var(--green-light); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 10px; color: var(--green-dark); flex-shrink: 0; font-weight: 700; }
+  .pay-methods { display: flex; gap: 8px; justify-content: center; margin-top: 1rem; flex-wrap: wrap; }
+  .pay-method { background: var(--bg); border: 1px solid var(--border-strong); border-radius: var(--radius-sm); padding: 5px 14px; font-size: 12px; color: var(--text-muted); font-weight: 500; }
+  .download-section { padding: 1.5rem; border-top: 1px solid var(--border); text-align: center; display: none; }
+  .download-section.visible { display: block; }
+  .success-badge { display: inline-flex; align-items: center; gap: 8px; background: var(--green-light); color: var(--green-dark); padding: 8px 16px; border-radius: 20px; font-size: 13px; font-weight: 500; margin-bottom: 1.25rem; }
+  .btn-download { width: 100%; padding: 14px; background: var(--green); color: white; border: none; border-radius: var(--radius-sm); font-family: 'IBM Plex Sans Arabic', sans-serif; font-size: 15px; font-weight: 600; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 10px; transition: background 0.2s; }
+  .btn-download:hover { background: var(--green-dark); }
+  .btn-download:disabled { background: var(--green-mid); cursor: not-allowed; }
+  .download-note { font-size: 12px; color: var(--text-faint); margin-top: 10px; }
+  .error-box { background: #FEF2F2; border: 1px solid #FECACA; border-radius: var(--radius-sm); padding: 12px 1rem; font-size: 13px; color: #B91C1C; margin-bottom: 1rem; text-align: center; }
   .hidden { display: none; }
-
-  /* FOOTER */
-  footer {
-    text-align: center;
-    padding: 2rem 1rem;
-    font-size: 12px;
-    color: var(--text-faint);
-    border-top: 1px solid var(--border);
-    margin-top: 2rem;
-  }
+  footer { text-align: center; padding: 2rem 1rem; font-size: 12px; color: var(--text-faint); border-top: 1px solid var(--border); margin-top: 2rem; }
 </style>
 </head>
 <body>
@@ -635,7 +139,6 @@
 </div>
 
 <div class="container">
-
   <div class="progress-wrap">
     <div class="progress-steps">
       <div class="p-step active" id="ps1"></div>
@@ -651,10 +154,7 @@
     <div class="card">
       <div class="card-head">
         <div class="card-icon">👤</div>
-        <div>
-          <div class="card-title">معلوماتك الشخصية</div>
-          <div class="card-sub">البيانات الأساسية التي تظهر في السيرة</div>
-        </div>
+        <div><div class="card-title">معلوماتك الشخصية</div><div class="card-sub">البيانات الأساسية التي تظهر في السيرة</div></div>
       </div>
       <div class="grid2" style="margin-bottom:12px;">
         <div class="field"><label>الاسم الكامل</label><input id="name" placeholder="محمد عبدالله الأحمد" /></div>
@@ -678,45 +178,26 @@
     <div class="card">
       <div class="card-head">
         <div class="card-icon">💼</div>
-        <div>
-          <div class="card-title">الخبرة والتعليم</div>
-          <div class="card-sub">خلفيتك المهنية والأكاديمية</div>
-        </div>
+        <div><div class="card-title">الخبرة والتعليم</div><div class="card-sub">خلفيتك المهنية والأكاديمية</div></div>
       </div>
       <div class="field" style="margin-bottom:12px;">
         <label>آخر وظيفة شغلتها</label>
         <input id="lastJob" placeholder="مثال: مهندس برمجيات أول — شركة STC" />
       </div>
       <div class="grid2" style="margin-bottom:12px;">
-        <div class="field">
-          <label>إجمالي سنوات الخبرة</label>
+        <div class="field"><label>إجمالي سنوات الخبرة</label>
           <select id="exp">
-            <option value="أقل من سنة">أقل من سنة</option>
-            <option value="١-٢ سنة">١-٢ سنة</option>
-            <option value="٣-٥ سنوات">٣-٥ سنوات</option>
-            <option value="٥-١٠ سنوات">٥-١٠ سنوات</option>
-            <option value="أكثر من ١٠ سنوات">أكثر من ١٠ سنوات</option>
+            <option>أقل من سنة</option><option>١-٢ سنة</option><option>٣-٥ سنوات</option><option>٥-١٠ سنوات</option><option>أكثر من ١٠ سنوات</option>
           </select>
         </div>
-        <div class="field">
-          <label>مستوى التعليم</label>
+        <div class="field"><label>مستوى التعليم</label>
           <select id="eduLevel">
-            <option>بكالوريوس</option>
-            <option>ماجستير</option>
-            <option>دكتوراه</option>
-            <option>دبلوم</option>
-            <option>ثانوية عامة</option>
+            <option>بكالوريوس</option><option>ماجستير</option><option>دكتوراه</option><option>دبلوم</option><option>ثانوية عامة</option>
           </select>
         </div>
       </div>
-      <div class="field" style="margin-bottom:12px;">
-        <label>التخصص والجامعة</label>
-        <input id="edu" placeholder="هندسة حاسب — جامعة الملك سعود" />
-      </div>
-      <div class="field">
-        <label>مهاراتك الرئيسية (افصل بفاصلة)</label>
-        <input id="skills" placeholder="Python، تحليل البيانات، إدارة المشاريع، SQL" />
-      </div>
+      <div class="field" style="margin-bottom:12px;"><label>التخصص والجامعة</label><input id="edu" placeholder="هندسة حاسب — جامعة الملك سعود" /></div>
+      <div class="field"><label>مهاراتك الرئيسية (افصل بفاصلة)</label><input id="skills" placeholder="Python، تحليل البيانات، إدارة المشاريع، SQL" /></div>
     </div>
     <button class="btn-primary" onclick="goTo(3)">التالي — الهدف الوظيفي ←</button>
     <button class="btn-secondary" onclick="goTo(1)">→ رجوع</button>
@@ -727,37 +208,17 @@
     <div class="card">
       <div class="card-head">
         <div class="card-icon">🎯</div>
-        <div>
-          <div class="card-title">هدفك الوظيفي</div>
-          <div class="card-sub">نخصص السيرة بناءً على ما تريده</div>
-        </div>
+        <div><div class="card-title">هدفك الوظيفي</div><div class="card-sub">نخصص السيرة بناءً على ما تريده</div></div>
       </div>
       <div class="grid2" style="margin-bottom:12px;">
-        <div class="field">
-          <label>الوظيفة التي تبحث عنها</label>
-          <input id="targetJob" placeholder="مدير مشاريع تقنية" />
-        </div>
-        <div class="field">
-          <label>القطاع المستهدف</label>
+        <div class="field"><label>الوظيفة التي تبحث عنها</label><input id="targetJob" placeholder="مدير مشاريع تقنية" /></div>
+        <div class="field"><label>القطاع المستهدف</label>
           <select id="sector">
-            <option>التقنية والبرمجة</option>
-            <option>المالية والمحاسبة</option>
-            <option>التسويق والمبيعات</option>
-            <option>الهندسة</option>
-            <option>الموارد البشرية</option>
-            <option>الطب والصحة</option>
-            <option>التعليم</option>
-            <option>العقارات</option>
-            <option>النفط والطاقة</option>
-            <option>القطاع الحكومي</option>
-            <option>اللوجستيات</option>
+            <option>التقنية والبرمجة</option><option>المالية والمحاسبة</option><option>التسويق والمبيعات</option><option>الهندسة</option><option>الموارد البشرية</option><option>الطب والصحة</option><option>التعليم</option><option>العقارات</option><option>النفط والطاقة</option><option>القطاع الحكومي</option><option>اللوجستيات</option>
           </select>
         </div>
       </div>
-      <div class="field">
-        <label>إنجاز أو ميزة تريد إبرازها (اختياري)</label>
-        <textarea id="highlight" placeholder="مثال: خفّضت تكاليف العمليات بنسبة ٣٠٪، أو حصلت على جائزة أفضل موظف لعامين متتاليين، أو أشرفت على فريق من ١٥ شخصاً..."></textarea>
-      </div>
+      <div class="field"><label>إنجاز أو ميزة تريد إبرازها (اختياري)</label><textarea id="highlight" placeholder="مثال: خفّضت تكاليف العمليات بنسبة ٣٠٪، أو حصلت على جائزة أفضل موظف لعامين متتاليين..."></textarea></div>
     </div>
     <button class="btn-primary" id="generateBtn" onclick="generateCV()">أنشئ سيرتي الذاتية الآن ←</button>
     <button class="btn-secondary" onclick="goTo(2)">→ رجوع</button>
@@ -778,40 +239,47 @@
     </div>
   </div>
 
-  <!-- PAGE 5: RESULT + PAYWALL -->
+  <!-- PAGE 5: RESULT -->
   <div id="page5" class="hidden">
     <div class="cv-result">
-      <div class="cv-preview" id="cvPreview">
-        <div class="cv-header-block">
-          <div>
-            <div class="cv-fullname" id="cvName"></div>
-            <div class="cv-role" id="cvRole"></div>
-            <div class="cv-contact" id="cvContact"></div>
+      <div class="cv-preview-wrap blurred" id="cvPreviewWrap">
+        <div id="cvPrintable">
+          <div class="cv-header-block">
+            <div>
+              <div class="cv-fullname" id="cvName"></div>
+              <div class="cv-role-text" id="cvRole"></div>
+              <div class="cv-contact-text" id="cvContact"></div>
+            </div>
+            <div class="cv-initials" id="cvInitials"></div>
           </div>
-          <div class="cv-initials" id="cvInitials"></div>
-        </div>
-        <div class="cv-section">
-          <div class="cv-sec-title">الملخص المهني</div>
-          <div class="cv-text" id="cvSummary"></div>
-        </div>
-        <div class="cv-section">
-          <div class="cv-sec-title">الخبرة العملية</div>
-          <div id="cvExp"></div>
-        </div>
-        <div class="cv-section">
-          <div class="cv-sec-title">المهارات</div>
-          <div id="cvSkills"></div>
+          <div class="cv-section">
+            <div class="cv-sec-title">الملخص المهني</div>
+            <div class="cv-text" id="cvSummary"></div>
+          </div>
+          <div class="cv-section">
+            <div class="cv-sec-title">الخبرة العملية</div>
+            <div id="cvExp"></div>
+          </div>
+          <div class="cv-section">
+            <div class="cv-sec-title">التعليم</div>
+            <div id="cvEdu"></div>
+          </div>
+          <div class="cv-section">
+            <div class="cv-sec-title">المهارات</div>
+            <div id="cvSkills"></div>
+          </div>
+          <div class="cv-section">
+            <div class="cv-sec-title">اللغات</div>
+            <div id="cvLangs"></div>
+          </div>
         </div>
       </div>
 
-      <div class="paywall">
+      <!-- PAYWALL -->
+      <div class="paywall" id="paywallSection">
         <div class="paywall-icon">🔓</div>
         <h2>سيرتك جاهزة — حمّلها الآن</h2>
-        <div class="paywall-sub">
-          اشترك للحصول على نسخة PDF احترافية<br />
-          وعدّلها في أي وقت وأنشئ سيراً غير محدودة
-        </div>
-
+        <div class="paywall-sub">اشترك للحصول على نسخة PDF احترافية<br />وعدّلها في أي وقت وأنشئ سيراً غير محدودة</div>
         <div style="text-align:center;">
           <div class="price-block">
             <div><span class="price-amount">٣٥</span> <span class="price-cur">ريال</span></div>
@@ -819,7 +287,6 @@
             <div class="price-hook">أقل من وجبة — وتفتح لك باب وظيفتك</div>
           </div>
         </div>
-
         <ul class="features-list">
           <li><span class="feat-check">✓</span> تحميل PDF احترافي غير محدود</li>
           <li><span class="feat-check">✓</span> تعديل السيرة في أي وقت</li>
@@ -828,31 +295,33 @@
           <li><span class="feat-check">✓</span> سيرة بالعربي والإنجليزي</li>
           <li><span class="feat-check">✓</span> تحسين السيرة حسب كل وظيفة</li>
         </ul>
-
-        <button class="btn-primary" onclick="alert('سيتم ربط Paytabs قريباً — شكراً لاهتمامك!')">
-          اشترك الآن — ٣٥ ريال/شهر
-        </button>
-
+        <button class="btn-primary" onclick="simulatePayment()">اشترك الآن — ٣٥ ريال/شهر</button>
         <div class="pay-methods">
           <div class="pay-method">mada مدى</div>
           <div class="pay-method">STC Pay</div>
           <div class="pay-method">Apple Pay</div>
           <div class="pay-method">Tabby تابي</div>
         </div>
+        <button class="btn-secondary" onclick="goTo(1)" style="margin-top:1rem;">إنشاء سيرة جديدة</button>
+      </div>
 
+      <!-- DOWNLOAD SECTION -->
+      <div class="download-section" id="downloadSection">
+        <div class="success-badge">✓ تم الاشتراك بنجاح — سيرتك جاهزة للتحميل</div>
+        <button class="btn-download" id="downloadBtn" onclick="downloadPDF()">
+          <span>⬇</span> تحميل السيرة الذاتية PDF
+        </button>
+        <div class="download-note">ملف PDF احترافي جاهز للإرسال لأصحاب العمل</div>
         <button class="btn-secondary" onclick="goTo(1)" style="margin-top:1rem;">إنشاء سيرة جديدة</button>
       </div>
     </div>
   </div>
-
 </div>
 
-<footer>
-  مساري. — جميع الحقوق محفوظة ٢٠٢٦ • مبني في الأردن للسوق السعودي
-</footer>
+<footer>مساري. — جميع الحقوق محفوظة ٢٠٢٦ • مبني في الأردن للسوق السعودي</footer>
 
 <script>
-  const stepLabels = ['الخطوة ١ من ٣', 'الخطوة ٢ من ٣', 'الخطوة ٣ من ٣', 'جاري الإنشاء...', 'سيرتك جاهزة'];
+  const stepLabels = ['الخطوة ١ من ٣','الخطوة ٢ من ٣','الخطوة ٣ من ٣','جاري الإنشاء...','سيرتك جاهزة'];
 
   function goTo(n) {
     [1,2,3,4,5].forEach(i => document.getElementById('page'+i).classList.add('hidden'));
@@ -861,8 +330,7 @@
       const s = document.getElementById('ps'+i);
       if(s) s.classList.toggle('active', i <= n);
     });
-    const label = document.getElementById('progressLabel');
-    if(label) label.textContent = stepLabels[n-1] || '';
+    document.getElementById('progressLabel').textContent = stepLabels[n-1] || '';
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }
 
@@ -881,12 +349,9 @@
     const btn = document.getElementById('generateBtn');
     btn.disabled = true;
     goTo(4);
-
-    const steps = ['ls1','ls2','ls3','ls4'];
-    steps.forEach((id, i) => {
-      setTimeout(() => document.getElementById(id).classList.add('done'), i * 900);
+    ['ls1','ls2','ls3','ls4'].forEach((id, i) => {
+      setTimeout(() => document.getElementById(id).classList.add('done'), i * 800);
     });
-
     const payload = {
       name: document.getElementById('name').value || 'المستخدم',
       jobTitle: document.getElementById('jobTitle').value,
@@ -903,86 +368,82 @@
       sector: document.getElementById('sector').value,
       highlight: document.getElementById('highlight').value
     };
-
     try {
-      const res = await fetch('/api/generate', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(payload)
-      });
-
+      const res = await fetch('/api/generate', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) });
       const data = await res.json();
       if(!data.success) throw new Error(data.error);
-
       renderCV(payload, data.cv);
-      goTo(5);
     } catch(err) {
-      console.error(err);
       renderCVFallback(payload);
-      goTo(5);
     }
-
+    goTo(5);
     btn.disabled = false;
   }
 
-  function renderCV(payload, cv) {
-    const nameParts = payload.name.trim().split(' ');
-    const initials = nameParts.length >= 2
-      ? nameParts[0][0] + nameParts[nameParts.length-1][0]
-      : payload.name[0];
-
+  function setCommonFields(p) {
+    const parts = p.name.trim().split(' ');
+    const initials = parts.length >= 2 ? parts[0][0] + parts[parts.length-1][0] : p.name[0];
     document.getElementById('cvInitials').textContent = initials;
-    document.getElementById('cvName').textContent = payload.name;
-    document.getElementById('cvRole').textContent = payload.jobTitle || cv.experience?.[0]?.title || '';
-    document.getElementById('cvContact').textContent =
-      [payload.phone, payload.email, payload.city].filter(Boolean).join('  |  ');
+    document.getElementById('cvName').textContent = p.name;
+    document.getElementById('cvRole').textContent = p.jobTitle;
+    document.getElementById('cvContact').textContent = [p.phone, p.email, p.city].filter(Boolean).join('  •  ');
+  }
 
+  function renderCV(p, cv) {
+    setCommonFields(p);
     document.getElementById('cvSummary').textContent = cv.summary || '';
-
     const expEl = document.getElementById('cvExp');
     expEl.innerHTML = '';
     (cv.experience || []).forEach(ex => {
-      expEl.innerHTML += `
-        <div class="cv-exp-item">
-          <div class="cv-exp-title">${ex.title}</div>
-          <div class="cv-exp-meta">${ex.company} • ${ex.duration}</div>
-          <div class="cv-exp-desc">${ex.description}</div>
-        </div>`;
+      expEl.innerHTML += `<div class="cv-exp-item"><div class="cv-exp-title">${ex.title}</div><div class="cv-exp-meta">${ex.company} • ${ex.duration}</div><div class="cv-exp-desc">${ex.description}</div></div>`;
     });
-
+    document.getElementById('cvEdu').innerHTML = `<div class="cv-exp-item"><div class="cv-exp-title">${cv.education?.degree || p.eduLevel + ' — ' + p.edu}</div><div class="cv-exp-meta">${cv.education?.institution || ''}</div></div>`;
     const skillsEl = document.getElementById('cvSkills');
     skillsEl.innerHTML = '';
-    (cv.skills || []).forEach(s => {
-      skillsEl.innerHTML += `<span class="skill-pill">${s}</span>`;
-    });
+    (cv.skills || []).forEach(s => { skillsEl.innerHTML += `<span class="skill-pill">${s}</span>`; });
+    const langsEl = document.getElementById('cvLangs');
+    langsEl.innerHTML = '';
+    (cv.languages || ['العربية — اللغة الأم','الإنجليزية — جيد']).forEach(l => { langsEl.innerHTML += `<div class="cv-lang-item">• ${l}</div>`; });
   }
 
-  function renderCVFallback(payload) {
-    const nameParts = payload.name.trim().split(' ');
-    const initials = nameParts.length >= 2
-      ? nameParts[0][0] + nameParts[nameParts.length-1][0]
-      : payload.name[0];
-
-    document.getElementById('cvInitials').textContent = initials;
-    document.getElementById('cvName').textContent = payload.name;
-    document.getElementById('cvRole').textContent = payload.jobTitle;
-    document.getElementById('cvContact').textContent =
-      [payload.phone, payload.email, payload.city].filter(Boolean).join('  |  ');
-    document.getElementById('cvSummary').textContent =
-      `محترف متميز في مجال ${payload.sector} بخبرة ${payload.exp}، أسعى للانضمام إلى بيئة عمل ديناميكية في دور ${payload.targetJob || payload.jobTitle}. ${payload.highlight || 'أتمتع بمهارات عالية وقدرة على تحقيق الأهداف المؤسسية بكفاءة.'}`;
-
-    document.getElementById('cvExp').innerHTML = `
-      <div class="cv-exp-item">
-        <div class="cv-exp-title">${payload.lastJob}</div>
-        <div class="cv-exp-meta">${payload.city} • ${payload.exp}</div>
-        <div class="cv-exp-desc">قيادة المشاريع وتطوير العمليات وتحقيق الأهداف الاستراتيجية للمؤسسة.</div>
-      </div>`;
-
+  function renderCVFallback(p) {
+    setCommonFields(p);
+    document.getElementById('cvSummary').textContent = `محترف متميز في مجال ${p.sector} بخبرة ${p.exp}، أسعى للانضمام في دور ${p.targetJob || p.jobTitle}. ${p.highlight || 'أتمتع بمهارات عالية وقدرة على تحقيق الأهداف المؤسسية بكفاءة.'}`;
+    document.getElementById('cvExp').innerHTML = `<div class="cv-exp-item"><div class="cv-exp-title">${p.lastJob}</div><div class="cv-exp-meta">${p.city} • ${p.exp}</div><div class="cv-exp-desc">قيادة المشاريع وتطوير العمليات وتحقيق الأهداف الاستراتيجية للمؤسسة.</div></div>`;
+    document.getElementById('cvEdu').innerHTML = `<div class="cv-exp-item"><div class="cv-exp-title">${p.eduLevel} — ${p.edu}</div></div>`;
     const skillsEl = document.getElementById('cvSkills');
     skillsEl.innerHTML = '';
-    payload.skills.split(/[,،]/).map(s => s.trim()).filter(Boolean).forEach(s => {
-      skillsEl.innerHTML += `<span class="skill-pill">${s}</span>`;
-    });
+    p.skills.split(/[,،]/).map(s => s.trim()).filter(Boolean).forEach(s => { skillsEl.innerHTML += `<span class="skill-pill">${s}</span>`; });
+    document.getElementById('cvLangs').innerHTML = '<div class="cv-lang-item">• العربية — اللغة الأم</div><div class="cv-lang-item">• الإنجليزية — جيد</div>';
+  }
+
+  function simulatePayment() {
+    document.getElementById('cvPreviewWrap').classList.remove('blurred');
+    document.getElementById('paywallSection').style.display = 'none';
+    document.getElementById('downloadSection').classList.add('visible');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  async function downloadPDF() {
+    const btn = document.getElementById('downloadBtn');
+    btn.disabled = true;
+    btn.innerHTML = '<span>⏳</span> جاري إنشاء الملف...';
+    try {
+      const { jsPDF } = window.jspdf;
+      const element = document.getElementById('cvPrintable');
+      const canvas = await html2canvas(element, { scale: 2, useCORS: true, backgroundColor: '#ffffff', logging: false });
+      const imgData = canvas.toDataURL('image/png');
+      const pdf = new jsPDF('p', 'mm', 'a4');
+      const pdfWidth = pdf.internal.pageSize.getWidth();
+      const pdfHeight = (canvas.height * pdfWidth) / canvas.width;
+      pdf.addImage(imgData, 'PNG', 0, 0, pdfWidth, pdfHeight);
+      const name = document.getElementById('cvName').textContent || 'masari-cv';
+      pdf.save(`${name}-masari.pdf`);
+    } catch(err) {
+      alert('حدث خطأ أثناء إنشاء الملف. يرجى المحاولة مرة أخرى.');
+    }
+    btn.disabled = false;
+    btn.innerHTML = '<span>⬇</span> تحميل السيرة الذاتية PDF';
   }
 </script>
 </body>
