@@ -1,0 +1,11 @@
+{
+  "name": "masari",
+  "version": "1.0.0",
+  "description": "Arabic AI CV Builder for Saudi job market",
+  "scripts": {
+    "start": "node api/generate.js"
+  },
+  "dependencies": {
+    "node-fetch": "^3.3.2"
+  }
+}
