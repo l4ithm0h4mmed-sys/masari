@@ -303,9 +303,26 @@ async function optimizeCV() {
   btn.disabled = false;
 }
 
+// Lazy load heavy PDF scripts only when needed
+function loadScript(src) {
+  return new Promise((resolve, reject) => {
+    if (document.querySelector(`script[src="${src}"]`)) { resolve(); return; }
+    const s = document.createElement('script');
+    s.src = src;
+    s.onload = resolve;
+    s.onerror = reject;
+    document.head.appendChild(s);
+  });
+}
+
 async function dlPDF() {
   const btn = document.getElementById('dlBtn'); btn.disabled = true; btn.textContent = t('dlProgress');
   try {
+    // Lazy load html2canvas + jspdf (only on first download)
+    await Promise.all([
+      loadScript('https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js'),
+      loadScript('https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js')
+    ]);
     const {jsPDF} = window.jspdf;
     const el = document.getElementById('cvDoc');
     const ow = el.style.width; el.style.width = '210mm';
