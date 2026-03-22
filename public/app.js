@@ -162,8 +162,17 @@ function updateMini() {
   document.getElementById('mR').textContent = j;
   if(n) { const p = n.split(' '); document.getElementById('mAv').textContent = p.length >= 2 ? p[0][0]+p[p.length-1][0] : n.slice(0,2); }
   else document.getElementById('mAv').textContent = '—';
-  // Save to localStorage
-  try { localStorage.setItem('masari_draft', JSON.stringify(getPayload())); } catch(e) {}
+}
+
+function updatePhoneFormat() {
+  const sel = document.getElementById('phoneCode');
+  const opt = sel.options[sel.selectedIndex];
+  const phoneInput = document.getElementById('phone');
+  const len = parseInt(opt.dataset.len) || 9;
+  phoneInput.maxLength = len;
+  phoneInput.placeholder = opt.dataset.ph || 'XXXXXXXXX';
+  // Trim if current value is too long
+  if(phoneInput.value.length > len) phoneInput.value = phoneInput.value.slice(0, len);
 }
 
 function vStep(s) {
@@ -338,8 +347,3 @@ async function dlPDF() {
   btn.disabled = false; btn.textContent = t('dlText');
 }
 
-// Restore draft from localStorage
-try {
-  const draft = JSON.parse(localStorage.getItem('masari_draft') || '{}');
-  if(draft.name) { document.getElementById('name').value = draft.name; document.getElementById('jobTitle').value = draft.jobTitle||''; document.getElementById('phone').value = draft.phone||''; document.getElementById('email').value = draft.email||''; document.getElementById('city').value = draft.city||''; document.getElementById('nationality').value = draft.nationality||''; updateMini(); }
-} catch(e) {}
