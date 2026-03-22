@@ -1,503 +1,246 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-<meta charset="UTF-8"/>
-<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1"/>
-<title>مساري — أنشئ سيرتك الذاتية بالذكاء الاصطناعي</title>
-<meta name="description" content="منصة مساري لبناء السيرة الذاتية بالذكاء الاصطناعي — مخصصة لسوق العمل السعودي"/>
+<meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1"/>
+<title>مساري — Masari</title>
+<meta name="description" content="AI-powered CV builder for the Saudi job market | منصة بناء السيرة الذاتية بالذكاء الاصطناعي"/>
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='22' fill='%23111'/><text x='50' y='70' fill='%2300D491' font-family='sans-serif' font-size='56' font-weight='bold' text-anchor='middle'>م</text></svg>">
-<link rel="preconnect" href="https://fonts.googleapis.com"/>
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
-<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
+<link rel="preconnect" href="https://fonts.googleapis.com"/><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@300;400;500;600;700&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet"/>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js" defer></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js" defer></script>
 <style>
-:root{
-  --accent:#00D491;--accent-dark:#00B87A;--accent-glow:rgba(0,212,145,0.15);
-  --dark:#0A0A0B;--dark2:#131315;--dark3:#1C1C1F;--dark4:#2A2A2E;
-  --surface:#FFFFFF;--bg:#F5F5F3;--bg2:#EBEBEA;
-  --border:rgba(0,0,0,0.06);--border2:rgba(0,0,0,0.10);
-  --text:#111;--text2:#555;--text3:#999;
-  --radius:14px;--radius-sm:10px;
-  --shadow:0 2px 20px rgba(0,0,0,0.06);
-  --tr:0.3s cubic-bezier(.4,0,.2,1);
-}
+:root{--ac:#00D491;--ac2:#00B87A;--acg:rgba(0,212,145,.15);--dk:#0A0A0B;--dk2:#131315;--dk3:#1C1C1F;--s:#FFF;--bg:#F5F5F3;--bg2:#EBEBEA;--b:rgba(0,0,0,.06);--b2:rgba(0,0,0,.1);--t:#111;--t2:#555;--t3:#999;--r:14px;--rs:10px;--sh:0 2px 20px rgba(0,0,0,.06);--tr:.3s cubic-bezier(.4,0,.2,1)}
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 html{scroll-behavior:smooth}
-body{font-family:'IBM Plex Sans Arabic',sans-serif;background:var(--bg);color:var(--text);direction:rtl;-webkit-font-smoothing:antialiased;line-height:1.6}
-
-/* === NAV === */
-.nav{background:var(--dark);padding:0 2rem;height:56px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100;border-bottom:1px solid rgba(255,255,255,0.06)}
-.nav-logo{font-size:22px;font-weight:700;color:#FFF}
-.nav-logo i{color:var(--accent)}
-.nav-tag{font-size:11px;color:var(--accent);border:1px solid rgba(0,212,145,0.3);padding:4px 12px;border-radius:20px;font-weight:600}
-
-/* === HERO === */
-.hero{background:linear-gradient(135deg,var(--dark) 0%,#0F1A15 50%,var(--dark2) 100%);padding:4rem 1.5rem 3.5rem;text-align:center;position:relative;overflow:hidden}
-.hero::before{content:'';position:absolute;top:-200px;left:50%;transform:translateX(-50%);width:600px;height:600px;background:radial-gradient(circle,rgba(0,212,145,0.12) 0%,transparent 60%);pointer-events:none}
+body{font-family:'IBM Plex Sans Arabic',sans-serif;background:var(--bg);color:var(--t);direction:rtl;-webkit-font-smoothing:antialiased;line-height:1.6}
+body.en{font-family:'Inter',sans-serif;direction:ltr}
+.nav{background:var(--dk);padding:0 1.5rem;height:56px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100;border-bottom:1px solid rgba(255,255,255,.06)}
+.nav-logo{font-size:22px;font-weight:700;color:#FFF}.nav-logo i{color:var(--ac);font-style:normal}
+.nav-r{display:flex;align-items:center;gap:12px}
+.lang-btn{background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.12);color:#FFF;padding:5px 14px;border-radius:20px;font-size:12px;font-weight:600;cursor:pointer;font-family:inherit;transition:all var(--tr)}
+.lang-btn:hover{background:rgba(255,255,255,.15)}
+.nav-tag{font-size:11px;color:var(--ac);border:1px solid rgba(0,212,145,.3);padding:4px 12px;border-radius:20px;font-weight:600}
+.hero{background:linear-gradient(135deg,var(--dk) 0%,#0F1A15 50%,var(--dk2) 100%);padding:3.5rem 1.5rem 3rem;text-align:center;position:relative;overflow:hidden}
+.hero::before{content:'';position:absolute;top:-200px;left:50%;transform:translateX(-50%);width:600px;height:600px;background:radial-gradient(circle,rgba(0,212,145,.12) 0%,transparent 60%);pointer-events:none}
 .hero::after{content:'';position:absolute;bottom:0;left:0;right:0;height:80px;background:linear-gradient(transparent,var(--bg));pointer-events:none}
-.trust-pill{display:inline-flex;align-items:center;gap:10px;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.08);padding:6px 16px;border-radius:30px;font-size:13px;color:rgba(255,255,255,0.7);margin-bottom:2rem;backdrop-filter:blur(8px)}
-.trust-pill .dots{display:flex}.trust-pill .dot{width:22px;height:22px;border-radius:50%;background:var(--accent-glow);border:2px solid rgba(0,212,145,0.3);margin-left:-6px;display:flex;align-items:center;justify-content:center;font-size:9px;color:var(--accent);font-weight:700}
-.hero h1{font-size:clamp(28px,6vw,46px);font-weight:700;color:#FFF;line-height:1.3;margin-bottom:1rem;position:relative;z-index:1}
-.hero h1 em{font-style:normal;color:var(--accent);position:relative}
-.hero p{font-size:15px;color:rgba(255,255,255,0.5);line-height:1.8;max-width:480px;margin:0 auto 2.5rem;position:relative;z-index:1}
-.hero-stats{display:flex;justify-content:center;gap:0;position:relative;z-index:1}
-.h-stat{text-align:center;padding:0 1.75rem;border-left:1px solid rgba(255,255,255,0.08)}
-.h-stat:last-child{border-left:none}
-.h-stat strong{display:block;font-size:20px;font-weight:700;color:var(--accent)}
-.h-stat span{font-size:11px;color:rgba(255,255,255,0.4);font-weight:500}
-
-/* === TEMPLATES SECTION === */
-.tpl-section{padding:2.5rem 1rem;text-align:center;max-width:720px;margin:0 auto}
-.tpl-section h2{font-size:20px;font-weight:700;margin-bottom:6px}
-.tpl-section p{font-size:14px;color:var(--text2);margin-bottom:2rem}
-.tpl-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
-@media(max-width:600px){.tpl-grid{grid-template-columns:1fr;max-width:280px;margin:0 auto}}
-.tpl-card{background:var(--surface);border:2px solid var(--border);border-radius:var(--radius);padding:1.25rem;cursor:pointer;transition:all var(--tr);text-align:center;position:relative}
-.tpl-card:hover{border-color:var(--accent);transform:translateY(-2px);box-shadow:0 8px 24px rgba(0,212,145,0.1)}
-.tpl-card.selected{border-color:var(--accent);background:rgba(0,212,145,0.03)}
-.tpl-card.selected::after{content:'✓';position:absolute;top:10px;left:10px;width:22px;height:22px;background:var(--accent);color:#FFF;border-radius:50%;font-size:12px;display:flex;align-items:center;justify-content:center;font-weight:700}
-.tpl-preview{height:120px;background:var(--bg);border-radius:8px;margin-bottom:12px;display:flex;align-items:center;justify-content:center;font-size:60px;opacity:0.6}
-.tpl-card.selected .tpl-preview{opacity:1}
-.tpl-name{font-size:14px;font-weight:700;margin-bottom:2px}
-.tpl-desc{font-size:11px;color:var(--text3)}
-
-/* === CONTAINER === */
-.container{max-width:660px;margin:0 auto;padding:0 1rem 4rem}
-
-/* === PROGRESS === */
-.prog{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:14px 20px;margin-bottom:1.5rem;display:flex;align-items:center;gap:12px;box-shadow:0 1px 4px rgba(0,0,0,0.02)}
-.prog-dots{display:flex;gap:6px;flex:1}
-.prog-d{flex:1;height:5px;border-radius:3px;background:var(--bg2);transition:background var(--tr)}
-.prog-d.on{background:var(--accent)}
-.prog-lbl{font-size:12px;font-weight:600;color:var(--text3);white-space:nowrap}
-
-/* === FORM CARDS === */
-.fcard{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:2rem;margin-bottom:1rem;box-shadow:var(--shadow);animation:fadeUp .4s ease}
-@media(max-width:540px){.fcard{padding:1.5rem 1.25rem}}
-@keyframes fadeUp{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
-.fcard-hd{display:flex;align-items:center;gap:14px;margin-bottom:1.5rem;padding-bottom:1.25rem;border-bottom:1px solid var(--border)}
-.fcard-ico{width:42px;height:42px;background:var(--accent-glow);border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0}
-.fcard-hd h2{font-size:17px;font-weight:700;margin-bottom:2px}
-.fcard-hd p{font-size:13px;color:var(--text3)}
+.tp{display:inline-flex;align-items:center;gap:10px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.08);padding:6px 16px;border-radius:30px;font-size:13px;color:rgba(255,255,255,.7);margin-bottom:1.75rem;backdrop-filter:blur(8px)}
+.tp .ds{display:flex}.tp .d{width:22px;height:22px;border-radius:50%;background:var(--acg);border:2px solid rgba(0,212,145,.3);margin-left:-6px;display:flex;align-items:center;justify-content:center;font-size:9px;color:var(--ac);font-weight:700}
+body.en .tp .d{margin-left:0;margin-right:-6px}
+.hero h1{font-size:clamp(26px,5.5vw,42px);font-weight:700;color:#FFF;line-height:1.3;margin-bottom:1rem;position:relative;z-index:1}
+.hero h1 em{font-style:normal;color:var(--ac)}
+.hero p{font-size:15px;color:rgba(255,255,255,.5);line-height:1.8;max-width:480px;margin:0 auto 2rem;position:relative;z-index:1}
+.hst{display:flex;justify-content:center;gap:0;position:relative;z-index:1}
+.hs{text-align:center;padding:0 1.5rem;border-left:1px solid rgba(255,255,255,.08)}
+body.en .hs{border-left:none;border-right:1px solid rgba(255,255,255,.08)}
+.hs:last-child{border-left:none;border-right:none}
+.hs strong{display:block;font-size:18px;font-weight:700;color:var(--ac)}
+.hs span{font-size:11px;color:rgba(255,255,255,.4);font-weight:500}
+.revs{padding:2rem 1rem;max-width:660px;margin:0 auto}
+.revs h3{font-size:16px;font-weight:700;text-align:center;margin-bottom:1.25rem;color:var(--t2)}
+.rg{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+@media(max-width:500px){.rg{grid-template-columns:1fr}}
+.rv{background:var(--s);border:1px solid var(--b);border-radius:var(--r);padding:1.25rem;box-shadow:0 1px 4px rgba(0,0,0,.02)}
+.rv-s{color:#F59E0B;font-size:12px;margin-bottom:8px}
+.rv q{font-size:13px;color:var(--t2);line-height:1.7;display:block;margin-bottom:8px;font-style:normal}
+.rv-w{font-size:12px;font-weight:600;color:var(--t3)}
+.tps{padding:2rem 1rem;text-align:center;max-width:720px;margin:0 auto}
+.tps h2{font-size:20px;font-weight:700;margin-bottom:4px}
+.tps>p{font-size:14px;color:var(--t2);margin-bottom:1.5rem}
+.tg{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+@media(max-width:600px){.tg{grid-template-columns:1fr;max-width:280px;margin:0 auto}}
+.tc{background:var(--s);border:2px solid var(--b);border-radius:var(--r);padding:1.25rem;cursor:pointer;transition:all var(--tr);text-align:center;position:relative}
+.tc:hover{border-color:var(--ac);transform:translateY(-2px);box-shadow:0 8px 24px rgba(0,212,145,.1)}
+.tc.sel{border-color:var(--ac);background:rgba(0,212,145,.03)}
+.tc.sel::after{content:'✓';position:absolute;top:10px;left:10px;width:22px;height:22px;background:var(--ac);color:#FFF;border-radius:50%;font-size:12px;display:flex;align-items:center;justify-content:center;font-weight:700}
+body.en .tc.sel::after{left:auto;right:10px}
+.tpv{height:100px;background:var(--bg);border-radius:8px;margin-bottom:10px;display:flex;align-items:center;justify-content:center;overflow:hidden;position:relative}
+.tpv-lines{width:80%;display:flex;flex-direction:column;gap:4px;padding:10px}
+.tpv-l{height:4px;border-radius:2px;background:var(--b2)}
+.tpv-l.ac{background:var(--ac);width:40%}
+.tpv-l.w50{width:50%}.tpv-l.w70{width:70%}.tpv-l.w90{width:90%}.tpv-l.w30{width:30%}
+.tc.mod .tpv{background:#1D4ED8}.tc.mod .tpv-l{background:rgba(255,255,255,.2)}.tc.mod .tpv-l.ac{background:#93C5FD}
+.tn{font-size:14px;font-weight:700;margin-bottom:2px}
+.td{font-size:11px;color:var(--t3)}
+.ctn{max-width:660px;margin:0 auto;padding:0 1rem 4rem}
+.prg{background:var(--s);border:1px solid var(--b);border-radius:var(--r);padding:14px 20px;margin-bottom:1.5rem;display:flex;align-items:center;gap:12px;box-shadow:0 1px 4px rgba(0,0,0,.02)}
+.pds{display:flex;gap:6px;flex:1}
+.pd{flex:1;height:5px;border-radius:3px;background:var(--bg2);transition:background var(--tr)}
+.pd.on{background:var(--ac)}
+.pl{font-size:12px;font-weight:600;color:var(--t3);white-space:nowrap}
+.mcv{background:var(--s);border:1px solid var(--b);border-radius:var(--r);padding:1rem 1.25rem;margin-bottom:1rem;box-shadow:var(--sh)}
+.mcv-h{font-size:12px;font-weight:600;color:var(--t3);margin-bottom:10px;display:flex;align-items:center;gap:6px}
+.mcv-h::before{content:'';width:8px;height:8px;border-radius:50%;background:var(--ac);display:inline-block;animation:pulse 2s infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.4}}
+.mcv-b{display:flex;gap:12px;align-items:center}
+.mav{width:36px;height:36px;border-radius:10px;background:var(--dk);display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:700;color:var(--ac);flex-shrink:0}
+.mn{font-size:14px;font-weight:700}.mr{font-size:12px;color:var(--ac);font-weight:600}
+.fc{background:var(--s);border:1px solid var(--b);border-radius:var(--r);padding:2rem;margin-bottom:1rem;box-shadow:var(--sh);animation:fu .4s ease}
+@media(max-width:540px){.fc{padding:1.5rem 1.25rem}}
+@keyframes fu{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
+.fh{display:flex;align-items:center;gap:14px;margin-bottom:1.5rem;padding-bottom:1.25rem;border-bottom:1px solid var(--b)}
+.fi{width:42px;height:42px;background:var(--acg);border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0}
+.fh h2{font-size:17px;font-weight:700;margin-bottom:2px}
+.fh p{font-size:13px;color:var(--t3)}
 .row{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:14px}
 @media(max-width:500px){.row{grid-template-columns:1fr}}
-.row:last-child{margin-bottom:0}
 .f{display:flex;flex-direction:column;gap:6px}
-.f label{font-size:13px;font-weight:600;color:var(--text)}
-.f .rq{color:#E53935;font-weight:400}
-.f input,.f select,.f textarea{width:100%;padding:11px 14px;border:1.5px solid var(--border2);border-radius:var(--radius-sm);font-family:inherit;font-size:14px;color:var(--text);background:var(--bg);direction:rtl;transition:all var(--tr);outline:none}
-.f input::placeholder,.f textarea::placeholder{color:var(--text3)}
-.f input:focus,.f select:focus,.f textarea:focus{border-color:var(--accent);background:#FFF;box-shadow:0 0 0 3px var(--accent-glow)}
+.f label{font-size:13px;font-weight:600}.f .rq{color:#E53935}
+.f input,.f select,.f textarea{width:100%;padding:11px 14px;border:1.5px solid var(--b2);border-radius:var(--rs);font-family:inherit;font-size:14px;color:var(--t);background:var(--bg);transition:all var(--tr);outline:none}
+.f input::placeholder,.f textarea::placeholder{color:var(--t3)}
+.f input:focus,.f select:focus,.f textarea:focus{border-color:var(--ac);background:#FFF;box-shadow:0 0 0 3px var(--acg)}
 .f textarea{resize:vertical;min-height:80px;line-height:1.7}
-
-/* === MINI PREVIEW === */
-.mini-cv{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:1rem 1.25rem;margin-bottom:1rem;box-shadow:var(--shadow)}
-.mini-cv-hd{font-size:12px;font-weight:600;color:var(--text3);margin-bottom:10px;display:flex;align-items:center;gap:6px}
-.mini-cv-hd::before{content:'';width:8px;height:8px;border-radius:50%;background:var(--accent);display:inline-block;animation:pulse 2s infinite}
-@keyframes pulse{0%,100%{opacity:1}50%{opacity:0.4}}
-.mini-cv-body{display:flex;gap:12px;align-items:center}
-.mini-av{width:36px;height:36px;border-radius:10px;background:var(--dark);display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:700;color:var(--accent);flex-shrink:0}
-.mini-name{font-size:14px;font-weight:700;min-height:18px}
-.mini-role{font-size:12px;color:var(--accent);font-weight:600;min-height:16px}
-
-/* === BUTTONS === */
-.btn{width:100%;padding:14px;border:none;border-radius:var(--radius-sm);font-family:inherit;font-size:15px;font-weight:600;cursor:pointer;transition:all var(--tr);display:flex;align-items:center;justify-content:center;gap:8px}
-.btn-g{background:var(--accent);color:var(--dark);margin-top:.75rem;box-shadow:0 4px 16px rgba(0,212,145,0.25)}
-.btn-g:hover{background:var(--accent-dark);transform:translateY(-1px);box-shadow:0 6px 24px rgba(0,212,145,0.3)}
-.btn-g:active{transform:translateY(0)}
-.btn-g:disabled{background:var(--bg2);color:var(--text3);cursor:not-allowed;transform:none;box-shadow:none}
-.btn-o{background:transparent;color:var(--text2);border:1.5px solid var(--border2);margin-top:8px}
-.btn-o:hover{background:var(--bg);color:var(--text)}
-.err-msg{background:#FFF0F0;border:1px solid #F5C6CB;border-radius:var(--radius-sm);padding:12px;font-size:13px;color:#DC3545;text-align:center;font-weight:500;margin-bottom:.75rem}
+body.en .f input,body.en .f select,body.en .f textarea{direction:ltr;text-align:left}
+body.en .f input[type="email"],body.en .f input[type="tel"]{direction:ltr}
+.btn{width:100%;padding:14px;border:none;border-radius:var(--rs);font-family:inherit;font-size:15px;font-weight:600;cursor:pointer;transition:all var(--tr);display:flex;align-items:center;justify-content:center;gap:8px}
+.bg{background:var(--ac);color:var(--dk);margin-top:.75rem;box-shadow:0 4px 16px rgba(0,212,145,.25)}
+.bg:hover{background:var(--ac2);transform:translateY(-1px)}.bg:active{transform:translateY(0)}
+.bg:disabled{background:var(--bg2);color:var(--t3);cursor:not-allowed;transform:none;box-shadow:none}
+.bo{background:transparent;color:var(--t2);border:1.5px solid var(--b2);margin-top:8px}.bo:hover{background:var(--bg)}
+.em{background:#FFF0F0;border:1px solid #F5C6CB;border-radius:var(--rs);padding:12px;font-size:13px;color:#DC3545;text-align:center;font-weight:500;margin-bottom:.75rem}
 .hidden{display:none!important}
-
-/* === LOADING === */
-.load-card{text-align:center;padding:4rem 1.5rem;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow);animation:fadeUp .4s ease}
-.spin{width:48px;height:48px;border:4px solid var(--accent-glow);border-top-color:var(--accent);border-radius:50%;animation:sp .7s linear infinite;margin:0 auto 1.5rem}
-@keyframes sp{to{transform:rotate(360deg)}}
-.load-card h3{font-size:18px;font-weight:700;margin-bottom:6px}
-.load-card p{font-size:14px;color:var(--text2)}
-.lsteps{display:flex;flex-direction:column;gap:10px;margin-top:2rem;max-width:250px;margin-left:auto;margin-right:auto}
-.ls{display:flex;align-items:center;gap:10px;font-size:13px;font-weight:500;color:var(--text3);transition:color .3s}
-.ls.ok{color:var(--accent)}
-.ls-d{width:8px;height:8px;border-radius:50%;background:#DDD;flex-shrink:0;transition:all .3s}
-.ls.ok .ls-d{background:var(--accent);box-shadow:0 0 0 3px var(--accent-glow)}
-
-/* ===================== */
-/* === CV DOCUMENT === */
-/* ===================== */
-.cv-wrap{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);box-shadow:0 8px 40px rgba(0,0,0,0.08);overflow:hidden;animation:fadeUp .5s ease}
-.cv-area{position:relative}
-.cv-area.blur .cv-doc{filter:blur(6px);pointer-events:none;user-select:none}
-.cv-area.blur::after{content:'';position:absolute;bottom:0;left:0;right:0;height:200px;background:linear-gradient(transparent,rgba(255,255,255,0.95) 60%,#FFF);pointer-events:none}
-
-/* Template: Classic */
-.cv-doc{background:#FFF;padding:40px;direction:rtl;text-align:right;font-family:'IBM Plex Sans Arabic',sans-serif;max-width:210mm;margin:0 auto}
-@media(max-width:600px){.cv-doc{padding:24px 16px}}
-.cv-doc.tpl-modern{--cv-accent:#2563EB;--cv-accent-light:#EFF6FF;--cv-accent-dark:#1D4ED8}
-.cv-doc.tpl-minimal{--cv-accent:#333;--cv-accent-light:#F5F5F5;--cv-accent-dark:#111}
-.cv-doc.tpl-classic{--cv-accent:#15805E;--cv-accent-light:#E8F5F0;--cv-accent-dark:#0B4D38}
-
-.cv-header{display:flex;align-items:center;justify-content:space-between;gap:16px;padding-bottom:20px;margin-bottom:24px}
-.cv-doc.tpl-classic .cv-header{border-bottom:3px solid var(--cv-accent)}
-.cv-doc.tpl-modern .cv-header{border-bottom:none;background:var(--cv-accent);margin:-40px -40px 24px;padding:32px 40px;color:#FFF}
-@media(max-width:600px){.cv-doc.tpl-modern .cv-header{margin:-24px -16px 24px;padding:24px 16px}}
-.cv-doc.tpl-minimal .cv-header{border-bottom:1px solid #DDD}
-
-.cv-hinfo{flex:1}
-.cv-hname{font-size:24px;font-weight:700;color:#111;margin-bottom:4px}
-.cv-doc.tpl-modern .cv-hname{color:#FFF}
-.cv-hjob{font-size:14px;font-weight:600;color:var(--cv-accent);margin-bottom:8px}
-.cv-doc.tpl-modern .cv-hjob{color:rgba(255,255,255,0.8)}
-.cv-hcontact{font-size:12px;color:#777;line-height:1.7}
-.cv-hcontact span{margin-left:6px}
-.cv-hcontact span::before{content:'•';margin-left:6px;color:#CCC}
-.cv-hcontact span:first-child::before{content:'';margin:0}
-.cv-doc.tpl-modern .cv-hcontact{color:rgba(255,255,255,0.6)}
-.cv-doc.tpl-modern .cv-hcontact span::before{color:rgba(255,255,255,0.3)}
-.cv-hav{width:56px;height:56px;border-radius:14px;background:var(--cv-accent);display:flex;align-items:center;justify-content:center;font-size:20px;font-weight:700;color:#FFF;flex-shrink:0}
-.cv-doc.tpl-modern .cv-hav{background:rgba(255,255,255,0.15);border:2px solid rgba(255,255,255,0.2)}
-.cv-doc.tpl-minimal .cv-hav{background:#333;border-radius:50%}
-
-.cv-sec{margin-bottom:22px}
-.cv-sec:last-child{margin-bottom:0}
-.cv-sec-t{font-size:13px;font-weight:700;color:var(--cv-accent-dark);padding-bottom:6px;margin-bottom:10px;border-bottom:2px solid var(--cv-accent-light)}
-.cv-doc.tpl-modern .cv-sec-t{border-bottom:none;background:var(--cv-accent-light);padding:6px 12px;border-radius:6px;margin-bottom:12px}
-.cv-doc.tpl-minimal .cv-sec-t{border-bottom:1px solid #DDD;font-size:12px;text-transform:none}
-.cv-body{font-size:13px;color:#444;line-height:1.85}
-.cv-ent{margin-bottom:14px}
-.cv-ent:last-child{margin-bottom:0}
-.cv-ent-row{display:flex;justify-content:space-between;align-items:baseline;flex-wrap:wrap;gap:4px;margin-bottom:2px}
-.cv-ent-t{font-size:14px;font-weight:700;color:#222}
-.cv-ent-d{font-size:12px;font-weight:600;color:var(--cv-accent)}
-.cv-ent-o{font-size:12px;color:#888;font-weight:500;margin-bottom:6px}
-.cv-ent-p{font-size:13px;color:#555;line-height:1.8;padding-right:12px;border-right:2px solid var(--cv-accent-light)}
-.cv-doc.tpl-minimal .cv-ent-p{border-right:none;padding-right:0}
-.cv-skills{display:flex;flex-wrap:wrap;gap:6px}
-.cv-sk{background:var(--cv-accent-light);color:var(--cv-accent-dark);font-size:12px;font-weight:600;padding:5px 14px;border-radius:6px}
-.cv-doc.tpl-modern .cv-sk{border-radius:20px}
-.cv-doc.tpl-minimal .cv-sk{background:transparent;border:1px solid #DDD;color:#333;font-weight:500}
-.cv-lang{display:inline-block;background:var(--cv-accent-light);color:var(--cv-accent-dark);font-size:12px;font-weight:600;padding:5px 14px;border-radius:20px;margin-left:6px;margin-bottom:6px}
-
-/* === PAYWALL === */
-.pw{padding:3rem 1.5rem;text-align:center;border-top:1px solid var(--border);background:linear-gradient(180deg,var(--bg) 0%,#FFF 100%)}
-.pw-stars{font-size:28px;margin-bottom:1rem}
+.lc{text-align:center;padding:4rem 1.5rem;background:var(--s);border:1px solid var(--b);border-radius:var(--r);box-shadow:var(--sh);animation:fu .4s ease}
+.sp{width:48px;height:48px;border:4px solid var(--acg);border-top-color:var(--ac);border-radius:50%;animation:spin .7s linear infinite;margin:0 auto 1.5rem}
+@keyframes spin{to{transform:rotate(360deg)}}
+.lc h3{font-size:18px;font-weight:700;margin-bottom:6px}.lc p{font-size:14px;color:var(--t2)}
+.ls-w{display:flex;flex-direction:column;gap:10px;margin-top:2rem;max-width:250px;margin-left:auto;margin-right:auto}
+.ls{display:flex;align-items:center;gap:10px;font-size:13px;font-weight:500;color:var(--t3);transition:color .3s}
+.ls.ok{color:var(--ac)}.ls-d{width:8px;height:8px;border-radius:50%;background:#DDD;flex-shrink:0;transition:all .3s}
+.ls.ok .ls-d{background:var(--ac);box-shadow:0 0 0 3px var(--acg)}
+.cw{background:var(--s);border:1px solid var(--b);border-radius:var(--r);box-shadow:0 8px 40px rgba(0,0,0,.08);overflow:hidden;animation:fu .5s ease}
+.ca{position:relative}.ca.blur .cd{filter:blur(6px);pointer-events:none;user-select:none}
+.ca.blur::after{content:'';position:absolute;bottom:0;left:0;right:0;height:200px;background:linear-gradient(transparent,rgba(255,255,255,.95) 60%,#FFF);pointer-events:none}
+.cd{background:#FFF;padding:40px;text-align:right;direction:rtl;font-family:'IBM Plex Sans Arabic',sans-serif;max-width:210mm;margin:0 auto}
+body.en .cd{text-align:left;direction:ltr;font-family:'Inter',sans-serif}
+@media(max-width:600px){.cd{padding:24px 16px}}
+.cd.tpl-classic{--ca:#15805E;--cl:#E8F5F0;--cd2:#0B4D38}
+.cd.tpl-modern{--ca:#2563EB;--cl:#EFF6FF;--cd2:#1D4ED8}
+.cd.tpl-minimal{--ca:#333;--cl:#F5F5F5;--cd2:#111}
+.ch{display:flex;align-items:center;justify-content:space-between;gap:16px;padding-bottom:20px;margin-bottom:24px}
+.cd.tpl-classic .ch{border-bottom:3px solid var(--ca)}
+.cd.tpl-modern .ch{border-bottom:none;background:var(--ca);margin:-40px -40px 24px;padding:32px 40px;color:#FFF}
+@media(max-width:600px){.cd.tpl-modern .ch{margin:-24px -16px 24px;padding:24px 16px}}
+.cd.tpl-minimal .ch{border-bottom:1px solid #DDD}
+.chi{flex:1}
+.chn{font-size:24px;font-weight:700;color:#111;margin-bottom:4px}
+.cd.tpl-modern .chn{color:#FFF}
+.chj{font-size:14px;font-weight:600;color:var(--ca);margin-bottom:8px}
+.cd.tpl-modern .chj{color:rgba(255,255,255,.8)}
+.chc{font-size:12px;color:#777;line-height:1.7}
+.chc span{margin-left:6px}body.en .chc span{margin-left:0;margin-right:6px}
+.chc span::before{content:'•';margin-left:6px;color:#CCC}body.en .chc span::before{margin-left:0;margin-right:6px}
+.chc span:first-child::before{content:'';margin:0}
+.cd.tpl-modern .chc{color:rgba(255,255,255,.6)}.cd.tpl-modern .chc span::before{color:rgba(255,255,255,.3)}
+.cha{width:56px;height:56px;border-radius:14px;background:var(--ca);display:flex;align-items:center;justify-content:center;font-size:20px;font-weight:700;color:#FFF;flex-shrink:0}
+.cd.tpl-modern .cha{background:rgba(255,255,255,.15);border:2px solid rgba(255,255,255,.2)}
+.cd.tpl-minimal .cha{border-radius:50%;background:#333}
+.cs{margin-bottom:22px}.cs:last-child{margin-bottom:0}
+.cst{font-size:13px;font-weight:700;color:var(--cd2);padding-bottom:6px;margin-bottom:10px;border-bottom:2px solid var(--cl)}
+.cd.tpl-modern .cst{border-bottom:none;background:var(--cl);padding:6px 12px;border-radius:6px;margin-bottom:12px}
+.cd.tpl-minimal .cst{border-bottom:1px solid #DDD;font-size:12px}
+.cb{font-size:13px;color:#444;line-height:1.85}
+.ce{margin-bottom:14px}.ce:last-child{margin-bottom:0}
+.cer{display:flex;justify-content:space-between;align-items:baseline;flex-wrap:wrap;gap:4px;margin-bottom:2px}
+.cet{font-size:14px;font-weight:700;color:#222}
+.ced{font-size:12px;font-weight:600;color:var(--ca)}
+.ceo{font-size:12px;color:#888;font-weight:500;margin-bottom:6px}
+.cep{font-size:13px;color:#555;line-height:1.8;padding-right:12px;border-right:2px solid var(--cl)}
+body.en .cep{padding-right:0;padding-left:12px;border-right:none;border-left:2px solid var(--cl)}
+.cd.tpl-minimal .cep{border:none;padding:0}
+.csg{display:flex;flex-wrap:wrap;gap:6px}
+.csk{background:var(--cl);color:var(--cd2);font-size:12px;font-weight:600;padding:5px 14px;border-radius:6px}
+.cd.tpl-modern .csk{border-radius:20px}.cd.tpl-minimal .csk{background:transparent;border:1px solid #DDD;color:#333;font-weight:500}
+.clg{display:inline-block;background:var(--cl);color:var(--cd2);font-size:12px;font-weight:600;padding:5px 14px;border-radius:20px;margin-left:6px;margin-bottom:6px}
+body.en .clg{margin-left:0;margin-right:6px}
+.pw{padding:3rem 1.5rem;text-align:center;border-top:1px solid var(--b);background:linear-gradient(180deg,var(--bg) 0%,#FFF 100%)}
+.pw-st{font-size:28px;margin-bottom:1rem}
 .pw h2{font-size:22px;font-weight:700;margin-bottom:8px}
-.pw .pw-desc{font-size:14px;color:var(--text2);line-height:1.7;margin-bottom:2rem;max-width:380px;margin-left:auto;margin-right:auto}
-.pw-price{background:var(--surface);border:2px solid var(--accent-glow);border-radius:var(--radius);padding:1.5rem;display:inline-block;min-width:200px;margin-bottom:2rem;box-shadow:var(--shadow)}
-.pw-price .num{font-size:44px;font-weight:800;color:var(--text)}
-.pw-price .cur{font-size:16px;color:var(--text2);font-weight:600;margin-right:4px}
-.pw-price .note{font-size:12px;color:var(--text3);margin-top:4px}
-.pw-price .badge{display:inline-block;font-size:12px;font-weight:600;color:var(--accent);background:var(--accent-glow);padding:4px 12px;border-radius:20px;margin-top:8px}
-.pw-feats{list-style:none;max-width:280px;margin:0 auto 2rem;text-align:right}
-.pw-feats li{display:flex;align-items:center;gap:10px;padding:10px 0;font-size:14px;font-weight:500;color:var(--text2);border-bottom:1px solid var(--bg)}
-.pw-feats li:last-child{border-bottom:none}
-.ck{width:20px;height:20px;background:var(--accent);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11px;color:#FFF;font-weight:700;flex-shrink:0}
-.pays{display:flex;gap:6px;justify-content:center;flex-wrap:wrap;margin-top:1rem}
-.pay{background:#FFF;border:1px solid var(--border2);border-radius:6px;padding:5px 12px;font-size:11px;font-weight:600;color:var(--text3)}
-
-/* === REVIEWS === */
-.reviews{padding:2rem 1rem;max-width:660px;margin:0 auto}
-.reviews h3{font-size:16px;font-weight:700;text-align:center;margin-bottom:1.5rem;color:var(--text2)}
-.rev-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
-@media(max-width:500px){.rev-grid{grid-template-columns:1fr}}
-.rev{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:1.25rem;box-shadow:0 1px 4px rgba(0,0,0,0.02)}
-.rev-stars{color:#F59E0B;font-size:12px;margin-bottom:8px}
-.rev q{font-size:13px;color:var(--text2);line-height:1.7;display:block;margin-bottom:10px;font-style:normal}
-.rev-who{font-size:12px;font-weight:600;color:var(--text3)}
-
-/* === DOWNLOAD === */
-.dl{padding:2.5rem 1.5rem;border-top:1px solid var(--border);text-align:center;display:none;background:var(--surface)}
-.dl.show{display:block;animation:fadeUp .5s ease}
-.dl-badge{display:inline-flex;align-items:center;gap:8px;background:var(--accent-glow);color:var(--accent-dark);border:1px solid rgba(0,212,145,0.2);padding:10px 20px;border-radius:30px;font-size:14px;font-weight:600;margin-bottom:1.5rem}
-.dl-note{font-size:12px;color:var(--text3);margin-top:10px;font-weight:500}
-
-/* === FOOTER === */
-footer{text-align:center;padding:2rem 1rem;font-size:12px;color:var(--text3);border-top:1px solid var(--border);background:var(--surface);font-weight:500}
+.pw .pwd{font-size:14px;color:var(--t2);line-height:1.7;margin-bottom:2rem;max-width:380px;margin-left:auto;margin-right:auto}
+.ppc{background:var(--s);border:2px solid var(--acg);border-radius:var(--r);padding:1.5rem;display:inline-block;min-width:200px;margin-bottom:2rem;box-shadow:var(--sh)}
+.ppc .n{font-size:44px;font-weight:800}.ppc .c{font-size:16px;color:var(--t2);font-weight:600;margin-right:4px}
+body.en .ppc .c{margin-right:0;margin-left:4px}
+.ppc .nt{font-size:12px;color:var(--t3);margin-top:4px}
+.ppc .bd{display:inline-block;font-size:12px;font-weight:600;color:var(--ac);background:var(--acg);padding:4px 12px;border-radius:20px;margin-top:8px}
+.pfl{list-style:none;max-width:280px;margin:0 auto 2rem;text-align:right}
+body.en .pfl{text-align:left}
+.pfl li{display:flex;align-items:center;gap:10px;padding:10px 0;font-size:14px;font-weight:500;color:var(--t2);border-bottom:1px solid var(--bg)}
+.pfl li:last-child{border-bottom:none}
+.ck{width:20px;height:20px;background:var(--ac);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11px;color:#FFF;font-weight:700;flex-shrink:0}
+.pys{display:flex;gap:6px;justify-content:center;flex-wrap:wrap;margin-top:1rem}
+.py{background:#FFF;border:1px solid var(--b2);border-radius:6px;padding:5px 12px;font-size:11px;font-weight:600;color:var(--t3)}
+.dl{padding:2.5rem 1.5rem;border-top:1px solid var(--b);text-align:center;display:none;background:var(--s)}
+.dl.show{display:block;animation:fu .5s ease}
+.dlb{display:inline-flex;align-items:center;gap:8px;background:var(--acg);color:var(--ac2);border:1px solid rgba(0,212,145,.2);padding:10px 20px;border-radius:30px;font-size:14px;font-weight:600;margin-bottom:1.5rem}
+.dln{font-size:12px;color:var(--t3);margin-top:10px;font-weight:500}
+footer{text-align:center;padding:2rem 1rem;font-size:12px;color:var(--t3);border-top:1px solid var(--b);background:var(--s);font-weight:500}
 </style>
 </head>
 <body>
-
-<div class="nav">
-  <div class="nav-logo">مساري<i>.</i></div>
-  <div class="nav-tag">مدعوم بالذكاء الاصطناعي</div>
-</div>
-
+<div class="nav"><div class="nav-logo">مساري<i>.</i></div><div class="nav-r"><button class="lang-btn" onclick="toggleLang()" id="langBtn">English</button><div class="nav-tag" data-t="navTag">مدعوم بالذكاء الاصطناعي</div></div></div>
 <div class="hero">
-  <div class="trust-pill">
-    <div class="dots"><div class="dot">م</div><div class="dot">ن</div><div class="dot">ع</div><div class="dot">أ</div></div>
-    انضم لأكثر من +٢,٥٠٠ باحث عن عمل في السعودية
-  </div>
-  <h1>سيرة ذاتية احترافية<br/><em>تُكتب لك بالذكاء الاصطناعي</em></h1>
-  <p>أجب على أسئلة بسيطة → اختر التصميم → حمّل سيرتك PDF<br/>كل هالشي في أقل من دقيقتين.</p>
-  <div class="hero-stats">
-    <div class="h-stat"><strong>٣ قوالب</strong><span>تصميم احترافي</span></div>
-    <div class="h-stat"><strong>دقيقتين</strong><span>وقت الإنشاء</span></div>
-    <div class="h-stat"><strong>٣٥ ريال</strong><span>فقط</span></div>
-  </div>
+<div class="tp"><div class="ds"><div class="d">م</div><div class="d">ن</div><div class="d">ع</div><div class="d">أ</div></div><span data-t="trustText">انضم لأكثر من +٢,٥٠٠ باحث عن عمل في السعودية</span></div>
+<h1 data-t="heroTitle">سيرة ذاتية احترافية<br/><em>تُكتب لك بالذكاء الاصطناعي</em></h1>
+<p data-t="heroDesc">أجب على أسئلة بسيطة → اختر التصميم → حمّل سيرتك PDF<br/>كل هالشي في أقل من دقيقتين.</p>
+<div class="hst"><div class="hs"><strong data-t="st1v">٣ قوالب</strong><span data-t="st1l">تصميم احترافي</span></div><div class="hs"><strong data-t="st2v">دقيقتين</strong><span data-t="st2l">وقت الإنشاء</span></div><div class="hs"><strong data-t="st3v">٣٥ ريال</strong><span data-t="st3l">فقط</span></div></div>
 </div>
-
-<!-- REVIEWS -->
-<div class="reviews" id="reviewsSection">
-  <h3>ماذا يقول مستخدمونا</h3>
-  <div class="rev-grid">
-    <div class="rev"><div class="rev-stars">★★★★★</div><q>سيرتي الذاتية صارت احترافية وقدرت أقدم على وظائف بثقة. شكراً مساري!</q><div class="rev-who">سارة م. — الرياض</div></div>
-    <div class="rev"><div class="rev-stars">★★★★★</div><q>أسرع طريقة لإنشاء CV عربي. الذكاء الاصطناعي كتب لي ملخص مهني أفضل مما كنت أتوقع.</q><div class="rev-who">فهد ع. — جدة</div></div>
-    <div class="rev"><div class="rev-stars">★★★★★</div><q>جربت مواقع كثيرة بس مساري الوحيد اللي يفهم السوق السعودي ويكتب بعربي سليم.</q><div class="rev-who">نورة ك. — الدمام</div></div>
-    <div class="rev"><div class="rev-stars">★★★★★</div><q>خريج جديد وما كنت أعرف أكتب سيرة ذاتية. مساري سهّل لي الموضوع بشكل كبير.</q><div class="rev-who">عمر ح. — المدينة</div></div>
-  </div>
+<div class="revs"><h3 data-t="revTitle">ماذا يقول مستخدمونا</h3><div class="rg">
+<div class="rv"><div class="rv-s">★★★★★</div><q data-t="r1q">سيرتي الذاتية صارت احترافية وقدرت أقدم على وظائف بثقة. شكراً مساري!</q><div class="rv-w" data-t="r1w">سارة م. — الرياض</div></div>
+<div class="rv"><div class="rv-s">★★★★★</div><q data-t="r2q">الذكاء الاصطناعي كتب لي ملخص مهني أفضل مما كنت أتوقع. أسرع طريقة لإنشاء CV.</q><div class="rv-w" data-t="r2w">فهد ع. — جدة</div></div>
+<div class="rv"><div class="rv-s">★★★★★</div><q data-t="r3q">جربت مواقع كثيرة بس مساري الوحيد اللي يفهم السوق السعودي ويكتب بعربي سليم.</q><div class="rv-w" data-t="r3w">نورة ك. — الدمام</div></div>
+<div class="rv"><div class="rv-s">★★★★★</div><q data-t="r4q">خريج جديد وما كنت أعرف أكتب سيرة. مساري سهّل لي الموضوع بشكل كبير.</q><div class="rv-w" data-t="r4w">عمر ح. — المدينة</div></div>
+</div></div>
+<div class="tps"><h2 data-t="tplTitle">اختر تصميم سيرتك الذاتية</h2><p data-t="tplDesc">كل القوالب متوافقة مع أنظمة التوظيف ATS</p>
+<div class="tg">
+<div class="tc sel" onclick="pickTpl('classic',this)"><div class="tpv"><div class="tpv-lines"><div class="tpv-l ac"></div><div class="tpv-l w90"></div><div class="tpv-l w70"></div><div class="tpv-l w50"></div><div class="tpv-l w30"></div></div></div><div class="tn" data-t="tpn1">كلاسيكي</div><div class="td" data-t="tpd1">رسمي — قطاع حكومي</div></div>
+<div class="tc mod" onclick="pickTpl('modern',this)"><div class="tpv"><div class="tpv-lines"><div class="tpv-l ac"></div><div class="tpv-l w90"></div><div class="tpv-l w70"></div><div class="tpv-l w50"></div><div class="tpv-l w30"></div></div></div><div class="tn" data-t="tpn2">عصري</div><div class="td" data-t="tpd2">ملفت — قطاع خاص</div></div>
+<div class="tc" onclick="pickTpl('minimal',this)"><div class="tpv"><div class="tpv-lines"><div class="tpv-l ac"></div><div class="tpv-l w90"></div><div class="tpv-l w70"></div><div class="tpv-l w50"></div><div class="tpv-l w30"></div></div></div><div class="tn" data-t="tpn3">بسيط</div><div class="td" data-t="tpd3">أنيق — كل المجالات</div></div>
+</div></div>
+<div class="ctn">
+<div class="prg"><div class="pds"><div class="pd on" id="pd1"></div><div class="pd" id="pd2"></div><div class="pd" id="pd3"></div><div class="pd" id="pd4"></div></div><div class="pl" id="pLbl" data-t="step1">الخطوة ١ من ٣</div></div>
+<div class="mcv" id="miniCV"><div class="mcv-h" data-t="livePreview">معاينة مباشرة</div><div class="mcv-b"><div class="mav" id="mAv">—</div><div><div class="mn" id="mN" data-t="yourName">اسمك سيظهر هنا</div><div class="mr" id="mR"></div></div></div></div>
+<div id="p1"><div class="fc"><div class="fh"><div class="fi">👤</div><div><h2 data-t="p1Title">المعلومات الشخصية</h2><p data-t="p1Desc">البيانات الأساسية في أعلى السيرة</p></div></div>
+<div class="row"><div class="f"><label data-t="lName">الاسم الكامل <span class="rq">*</span></label><input id="name" data-ph="phName" placeholder="محمد عبدالله الأحمد" oninput="updateMini()"/></div><div class="f"><label data-t="lJob">المسمى الوظيفي <span class="rq">*</span></label><input id="jobTitle" data-ph="phJob" placeholder="مهندس برمجيات" oninput="updateMini()"/></div></div>
+<div class="row"><div class="f"><label data-t="lPhone">رقم الجوال <span class="rq">*</span></label><input id="phone" data-ph="phPhone" placeholder="+966 5X XXX XXXX" type="tel" dir="ltr" style="text-align:right"/></div><div class="f"><label data-t="lEmail">البريد الإلكتروني <span class="rq">*</span></label><input id="email" type="email" placeholder="name@email.com" dir="ltr" style="text-align:right"/></div></div>
+<div class="row"><div class="f"><label data-t="lCity">المدينة</label><input id="city" data-ph="phCity" placeholder="الرياض"/></div><div class="f"><label data-t="lNat">الجنسية</label><input id="nationality" data-ph="phNat" placeholder="سعودي"/></div></div>
+</div><div id="e1" class="em hidden"></div>
+<button class="btn bg" onclick="vStep(1)" data-t="btn1">التالي — الخبرة والتعليم ←</button></div>
+<div id="p2" class="hidden"><div class="fc"><div class="fh"><div class="fi">💼</div><div><h2 data-t="p2Title">الخبرة والتعليم</h2><p data-t="p2Desc">خلفيتك المهنية والأكاديمية</p></div></div>
+<div class="f" style="margin-bottom:14px"><label data-t="lLastJob">آخر وظيفة شغلتها <span class="rq">*</span></label><input id="lastJob" data-ph="phLastJob" placeholder="مهندس برمجيات أول — STC"/></div>
+<div class="row"><div class="f"><label data-t="lExp">سنوات الخبرة</label><select id="exp"><option data-t="expFresh">خريج جديد</option><option data-t="exp12">١-٢ سنة</option><option data-t="exp35">٣-٥ سنوات</option><option data-t="exp510">٥-١٠ سنوات</option><option data-t="exp10p">أكثر من ١٠</option></select></div><div class="f"><label data-t="lEduLvl">مستوى التعليم</label><select id="eduLevel"><option data-t="eduBach">بكالوريوس</option><option data-t="eduMast">ماجستير</option><option data-t="eduPhd">دكتوراه</option><option data-t="eduDip">دبلوم</option><option data-t="eduHigh">ثانوية عامة</option></select></div></div>
+<div class="f" style="margin-bottom:14px"><label data-t="lEdu">التخصص والجامعة</label><input id="edu" data-ph="phEdu" placeholder="هندسة حاسب — جامعة الملك سعود"/></div>
+<div class="f"><label data-t="lSkills">المهارات الرئيسية</label><input id="skills" data-ph="phSkills" placeholder="Python، إدارة المشاريع، تحليل البيانات"/></div>
+</div><div id="e2" class="em hidden"></div>
+<button class="btn bg" onclick="vStep(2)" data-t="btn2">التالي — الهدف الوظيفي ←</button>
+<button class="btn bo" onclick="go(1)" data-t="btnBack">→ رجوع</button></div>
+<div id="p3" class="hidden"><div class="fc"><div class="fh"><div class="fi">🎯</div><div><h2 data-t="p3Title">الهدف الوظيفي</h2><p data-t="p3Desc">الذكاء الاصطناعي سيخصص المحتوى بناءً على هدفك</p></div></div>
+<div class="row"><div class="f"><label data-t="lTarget">الوظيفة المستهدفة <span class="rq">*</span></label><input id="targetJob" data-ph="phTarget" placeholder="مدير مشاريع تقنية"/></div><div class="f"><label data-t="lSector">القطاع</label><select id="sector"><option data-t="secTech">التقنية</option><option data-t="secFin">المالية</option><option data-t="secMkt">التسويق</option><option data-t="secEng">الهندسة</option><option data-t="secHR">الموارد البشرية</option><option data-t="secHealth">الصحة</option><option data-t="secEdu">التعليم</option><option data-t="secGov">الحكومي</option><option data-t="secLog">اللوجستيات</option></select></div></div>
+<div class="f"><label data-t="lHighlight">إنجاز مميز (اختياري)</label><textarea id="highlight" data-ph="phHighlight" placeholder="مثال: خفّضت التكاليف ٣٠٪..."></textarea></div>
+</div><div id="e3" class="em hidden"></div>
+<button class="btn bg" id="genBtn" onclick="gen()" data-t="btnGen">أنشئ سيرتي الذاتية 🪄</button>
+<button class="btn bo" onclick="go(2)" data-t="btnBack">→ رجوع</button></div>
+<div id="p4" class="hidden"><div class="lc"><div class="sp"></div><h3 data-t="loadTitle">الذكاء الاصطناعي يكتب سيرتك...</h3><p data-t="loadDesc">محتوى مخصص لسوق العمل السعودي</p>
+<div class="ls-w"><div class="ls" id="s1"><div class="ls-d"></div><span data-t="ls1">تحليل بياناتك</span></div><div class="ls" id="s2"><div class="ls-d"></div><span data-t="ls2">كتابة الملخص المهني</span></div><div class="ls" id="s3"><div class="ls-d"></div><span data-t="ls3">صياغة الخبرات</span></div><div class="ls" id="s4"><div class="ls-d"></div><span data-t="ls4">تنسيق السيرة النهائية</span></div></div></div></div>
+<div id="p5" class="hidden"><div class="cw">
+<div class="ca blur" id="cvA"><div class="cd tpl-classic" id="cvDoc">
+<div class="ch"><div class="chi"><div class="chn" id="cN"></div><div class="chj" id="cJ"></div><div class="chc" id="cC"></div></div><div class="cha" id="cA"></div></div>
+<div class="cs"><div class="cst" data-t="cvSum">الملخص المهني</div><div class="cb" id="cS"></div></div>
+<div class="cs"><div class="cst" data-t="cvExp">الخبرة العملية</div><div id="cE"></div></div>
+<div class="cs"><div class="cst" data-t="cvEdu">التعليم</div><div id="cEd"></div></div>
+<div class="cs"><div class="cst" data-t="cvSk">المهارات</div><div class="csg" id="cSk"></div></div>
+<div class="cs"><div class="cst" data-t="cvLn">اللغات</div><div id="cL"></div></div>
+</div></div>
+<div class="pw" id="pwS"><div class="pw-st">⭐⭐⭐⭐⭐</div><h2 data-t="pwTitle">سيرتك جاهزة — حمّلها الآن</h2><p class="pwd" data-t="pwDesc">ادفع مرة واحدة وحمّل سيرتك كملف PDF احترافي جاهز للإرسال.</p>
+<div class="ppc"><div><span class="n" data-t="price">٣٥</span> <span class="c" data-t="cur">ريال</span></div><div class="nt" data-t="priceNote">دفعة واحدة — بدون اشتراك</div><div class="bd" data-t="priceBadge">👌 أرخص من كوب قهوة</div></div>
+<ul class="pfl"><li><span class="ck">✓</span><span data-t="f1">تحميل PDF بجودة عالية</span></li><li><span class="ck">✓</span><span data-t="f2">صياغة ذكية بالعربي</span></li><li><span class="ck">✓</span><span data-t="f3">متوافق مع أنظمة ATS</span></li><li><span class="ck">✓</span><span data-t="f4">تعديل وإعادة تحميل مجاناً</span></li></ul>
+<button class="btn bg" style="font-size:17px;padding:16px;max-width:400px;margin:0 auto" onclick="unlock()" data-t="payBtn">ادفع ٣٥ ريال وحمّل سيرتك</button>
+<div class="pys"><div class="py">Mada</div><div class="py">Visa</div><div class="py">Apple Pay</div><div class="py">Tabby</div></div></div>
+<div class="dl" id="dlS"><div class="dlb" data-t="dlBadge">✓ تم الدفع — سيرتك جاهزة</div>
+<button class="btn bg" id="dlBtn" style="font-size:17px;padding:16px;max-width:400px;margin:0 auto" onclick="dlPDF()" data-t="dlText">⬇ تحميل السيرة الذاتية PDF</button>
+<div class="dln" data-t="dlNote">ملف PDF جاهز للإرفاق في LinkedIn وطاقات</div>
+<button class="btn bo" onclick="go(1)" style="margin-top:1.5rem;max-width:400px;margin-left:auto;margin-right:auto" data-t="newCv">← إنشاء سيرة جديدة</button></div>
+</div></div>
 </div>
-
-<!-- TEMPLATE SELECTION -->
-<div class="tpl-section" id="tplSection">
-  <h2>اختر تصميم سيرتك الذاتية</h2>
-  <p>كل القوالب متوافقة مع أنظمة التوظيف ATS</p>
-  <div class="tpl-grid">
-    <div class="tpl-card selected" onclick="pickTpl('classic',this)">
-      <div class="tpl-preview">📋</div>
-      <div class="tpl-name">كلاسيكي</div>
-      <div class="tpl-desc">رسمي ومناسب للقطاع الحكومي</div>
-    </div>
-    <div class="tpl-card" onclick="pickTpl('modern',this)">
-      <div class="tpl-preview">🎨</div>
-      <div class="tpl-name">عصري</div>
-      <div class="tpl-desc">تصميم ملفت للقطاع الخاص</div>
-    </div>
-    <div class="tpl-card" onclick="pickTpl('minimal',this)">
-      <div class="tpl-preview">✨</div>
-      <div class="tpl-name">بسيط</div>
-      <div class="tpl-desc">أنيق ونظيف لكل المجالات</div>
-    </div>
-  </div>
-</div>
-
-<div class="container">
-  <div class="prog">
-    <div class="prog-dots"><div class="prog-d on" id="pd1"></div><div class="prog-d" id="pd2"></div><div class="prog-d" id="pd3"></div><div class="prog-d" id="pd4"></div></div>
-    <div class="prog-lbl" id="pLbl">الخطوة ١ من ٣</div>
-  </div>
-
-  <!-- MINI PREVIEW -->
-  <div class="mini-cv" id="miniCV">
-    <div class="mini-cv-hd">معاينة مباشرة</div>
-    <div class="mini-cv-body">
-      <div class="mini-av" id="mAv">—</div>
-      <div>
-        <div class="mini-name" id="mName">اسمك سيظهر هنا</div>
-        <div class="mini-role" id="mRole"></div>
-      </div>
-    </div>
-  </div>
-
-  <!-- PAGE 1 -->
-  <div id="p1">
-    <div class="fcard">
-      <div class="fcard-hd"><div class="fcard-ico">👤</div><div><h2>المعلومات الشخصية</h2><p>البيانات الأساسية في أعلى السيرة</p></div></div>
-      <div class="row"><div class="f"><label>الاسم الكامل <span class="rq">*</span></label><input id="name" placeholder="محمد عبدالله الأحمد" oninput="updateMini()"/></div><div class="f"><label>المسمى الوظيفي <span class="rq">*</span></label><input id="jobTitle" placeholder="مهندس برمجيات" oninput="updateMini()"/></div></div>
-      <div class="row"><div class="f"><label>رقم الجوال <span class="rq">*</span></label><input id="phone" placeholder="+966 5X XXX XXXX" dir="ltr" style="text-align:right"/></div><div class="f"><label>البريد الإلكتروني <span class="rq">*</span></label><input id="email" type="email" placeholder="name@email.com" dir="ltr" style="text-align:right"/></div></div>
-      <div class="row"><div class="f"><label>المدينة</label><input id="city" placeholder="الرياض"/></div><div class="f"><label>الجنسية</label><input id="nationality" placeholder="سعودي"/></div></div>
-    </div>
-    <div id="e1" class="err-msg hidden"></div>
-    <button class="btn btn-g" onclick="vStep(1)">التالي — الخبرة والتعليم ←</button>
-  </div>
-
-  <!-- PAGE 2 -->
-  <div id="p2" class="hidden">
-    <div class="fcard">
-      <div class="fcard-hd"><div class="fcard-ico">💼</div><div><h2>الخبرة والتعليم</h2><p>خلفيتك المهنية والأكاديمية</p></div></div>
-      <div class="f" style="margin-bottom:14px"><label>آخر وظيفة شغلتها <span class="rq">*</span></label><input id="lastJob" placeholder="مهندس برمجيات أول — شركة STC"/></div>
-      <div class="row"><div class="f"><label>سنوات الخبرة</label><select id="exp"><option>خريج جديد</option><option>١-٢ سنة</option><option>٣-٥ سنوات</option><option>٥-١٠ سنوات</option><option>أكثر من ١٠</option></select></div><div class="f"><label>مستوى التعليم</label><select id="eduLevel"><option>بكالوريوس</option><option>ماجستير</option><option>دكتوراه</option><option>دبلوم</option><option>ثانوية عامة</option></select></div></div>
-      <div class="f" style="margin-bottom:14px"><label>التخصص والجامعة</label><input id="edu" placeholder="هندسة حاسب — جامعة الملك سعود"/></div>
-      <div class="f"><label>المهارات الرئيسية</label><input id="skills" placeholder="Python، إدارة المشاريع، تحليل البيانات"/></div>
-    </div>
-    <div id="e2" class="err-msg hidden"></div>
-    <button class="btn btn-g" onclick="vStep(2)">التالي — الهدف الوظيفي ←</button>
-    <button class="btn btn-o" onclick="go(1)">→ رجوع</button>
-  </div>
-
-  <!-- PAGE 3 -->
-  <div id="p3" class="hidden">
-    <div class="fcard">
-      <div class="fcard-hd"><div class="fcard-ico">🎯</div><div><h2>الهدف الوظيفي</h2><p>الذكاء الاصطناعي سيخصص المحتوى بناءً على هدفك</p></div></div>
-      <div class="row"><div class="f"><label>الوظيفة المستهدفة <span class="rq">*</span></label><input id="targetJob" placeholder="مدير مشاريع تقنية"/></div><div class="f"><label>القطاع</label><select id="sector"><option>التقنية</option><option>المالية</option><option>التسويق</option><option>الهندسة</option><option>الموارد البشرية</option><option>الصحة</option><option>التعليم</option><option>الحكومي</option><option>اللوجستيات</option></select></div></div>
-      <div class="f"><label>إنجاز مميز (اختياري)</label><textarea id="highlight" placeholder="مثال: خفّضت التكاليف ٣٠٪ أو حصلت على جائزة التميز..."></textarea></div>
-    </div>
-    <div id="e3" class="err-msg hidden"></div>
-    <button class="btn btn-g" id="genBtn" onclick="gen()">أنشئ سيرتي الذاتية 🪄</button>
-    <button class="btn btn-o" onclick="go(2)">→ رجوع</button>
-  </div>
-
-  <!-- PAGE 4: Loading -->
-  <div id="p4" class="hidden">
-    <div class="load-card">
-      <div class="spin"></div>
-      <h3>الذكاء الاصطناعي يكتب سيرتك...</h3>
-      <p>محتوى مخصص لسوق العمل السعودي</p>
-      <div class="lsteps">
-        <div class="ls" id="s1"><div class="ls-d"></div>تحليل بياناتك</div>
-        <div class="ls" id="s2"><div class="ls-d"></div>كتابة الملخص المهني</div>
-        <div class="ls" id="s3"><div class="ls-d"></div>صياغة الخبرات</div>
-        <div class="ls" id="s4"><div class="ls-d"></div>تنسيق السيرة النهائية</div>
-      </div>
-    </div>
-  </div>
-
-  <!-- PAGE 5: Result -->
-  <div id="p5" class="hidden">
-    <div class="cv-wrap">
-      <div class="cv-area blur" id="cvArea">
-        <div class="cv-doc tpl-classic" id="cvDoc">
-          <div class="cv-header">
-            <div class="cv-hinfo"><div class="cv-hname" id="cN"></div><div class="cv-hjob" id="cJ"></div><div class="cv-hcontact" id="cC"></div></div>
-            <div class="cv-hav" id="cA"></div>
-          </div>
-          <div class="cv-sec"><div class="cv-sec-t">الملخص المهني</div><div class="cv-body" id="cS"></div></div>
-          <div class="cv-sec"><div class="cv-sec-t">الخبرة العملية</div><div id="cE"></div></div>
-          <div class="cv-sec"><div class="cv-sec-t">التعليم</div><div id="cEd"></div></div>
-          <div class="cv-sec"><div class="cv-sec-t">المهارات</div><div class="cv-skills" id="cSk"></div></div>
-          <div class="cv-sec"><div class="cv-sec-t">اللغات</div><div id="cL"></div></div>
-        </div>
-      </div>
-      <div class="pw" id="pwSec">
-        <div class="pw-stars">⭐⭐⭐⭐⭐</div>
-        <h2>سيرتك جاهزة — حمّلها الآن</h2>
-        <p class="pw-desc">ادفع مرة واحدة وحمّل سيرتك كملف PDF احترافي جاهز للإرسال.</p>
-        <div class="pw-price"><div><span class="num">٣٥</span> <span class="cur">ريال</span></div><div class="note">دفعة واحدة — بدون اشتراك</div><div class="badge">👌 أرخص من كوب قهوة</div></div>
-        <ul class="pw-feats">
-          <li><span class="ck">✓</span>تحميل PDF بجودة عالية</li>
-          <li><span class="ck">✓</span>صياغة ذكية بالعربي</li>
-          <li><span class="ck">✓</span>متوافق مع أنظمة ATS</li>
-          <li><span class="ck">✓</span>تعديل وإعادة تحميل مجاناً</li>
-        </ul>
-        <button class="btn btn-g" style="font-size:17px;padding:16px;max-width:400px;margin:0 auto" onclick="unlock()">ادفع ٣٥ ريال وحمّل سيرتك</button>
-        <div class="pays"><div class="pay">مدى</div><div class="pay">فيزا</div><div class="pay">Apple Pay</div><div class="pay">تابي</div></div>
-      </div>
-      <div class="dl" id="dlSec">
-        <div class="dl-badge">✓ تم الدفع — سيرتك جاهزة</div>
-        <button class="btn btn-g" id="dlBtn" style="font-size:17px;padding:16px;max-width:400px;margin:0 auto" onclick="dlPDF()">⬇ تحميل السيرة الذاتية PDF</button>
-        <div class="dl-note">ملف PDF جاهز للإرفاق في LinkedIn وطاقات</div>
-        <button class="btn btn-o" onclick="go(1)" style="margin-top:1.5rem;max-width:400px;margin-left:auto;margin-right:auto">← إنشاء سيرة جديدة</button>
-      </div>
-    </div>
-  </div>
-</div>
-
-<footer>© ٢٠٢٦ مساري — جميع الحقوق محفوظة. مصمم لسوق العمل السعودي.</footer>
-
-<script>
-let tpl='classic';
-const lbls=['الخطوة ١ من ٣','الخطوة ٢ من ٣','الخطوة ٣ من ٣','جاري الإنشاء...','سيرتك جاهزة!'];
-
-function pickTpl(t,el){tpl=t;document.querySelectorAll('.tpl-card').forEach(c=>c.classList.remove('selected'));el.classList.add('selected')}
-
-function go(n){
-  [1,2,3,4,5].forEach(i=>document.getElementById('p'+i).classList.add('hidden'));
-  document.getElementById('p'+n).classList.remove('hidden');
-  [1,2,3,4].forEach(i=>{const d=document.getElementById('pd'+i);if(d)d.classList.toggle('on',i<=n)});
-  document.getElementById('pLbl').textContent=lbls[n-1]||'';
-  window.scrollTo({top:document.querySelector('.container').offsetTop-70,behavior:'smooth'});
-}
-
-function showE(id,m){const el=document.getElementById(id);el.textContent=m;el.classList.remove('hidden')}
-function hideE(id){document.getElementById(id).classList.add('hidden')}
-
-function updateMini(){
-  const n=document.getElementById('name').value.trim();
-  const j=document.getElementById('jobTitle').value.trim();
-  document.getElementById('mName').textContent=n||'اسمك سيظهر هنا';
-  document.getElementById('mRole').textContent=j;
-  if(n){const p=n.split(' ');document.getElementById('mAv').textContent=p.length>=2?p[0][0]+p[p.length-1][0]:n.slice(0,2)}
-  else document.getElementById('mAv').textContent='—';
-}
-
-function vStep(s){
-  if(s===1){
-    const n=document.getElementById('name').value.trim(),j=document.getElementById('jobTitle').value.trim(),p=document.getElementById('phone').value.trim(),e=document.getElementById('email').value.trim();
-    if(!n||!j||!p||!e){showE('e1','يرجى تعبئة جميع الحقول المطلوبة');return}
-    if(!e.includes('@')){showE('e1','يرجى إدخال بريد إلكتروني صحيح');return}
-    hideE('e1');
-  }
-  if(s===2){if(!document.getElementById('lastJob').value.trim()){showE('e2','يرجى كتابة آخر وظيفة شغلتها');return}hideE('e2')}
-  go(s+1);
-}
-
-async function gen(){
-  const tj=document.getElementById('targetJob').value.trim();
-  if(!tj){showE('e3','يرجى تحديد الوظيفة المستهدفة');return}
-  hideE('e3');
-  const btn=document.getElementById('genBtn');btn.disabled=true;
-  go(4);
-  ['s1','s2','s3','s4'].forEach((id,i)=>{setTimeout(()=>document.getElementById(id).classList.add('ok'),(i+1)*700)});
-  const payload={name:document.getElementById('name').value||'المستخدم',jobTitle:document.getElementById('jobTitle').value,phone:document.getElementById('phone').value,email:document.getElementById('email').value,city:document.getElementById('city').value,nationality:document.getElementById('nationality').value,lastJob:document.getElementById('lastJob').value,exp:document.getElementById('exp').value,edu:document.getElementById('edu').value,eduLevel:document.getElementById('eduLevel').value,skills:document.getElementById('skills').value,targetJob:tj,sector:document.getElementById('sector').value,highlight:document.getElementById('highlight').value};
-  try{
-    const res=await fetch('/api/generate',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(payload)});
-    const data=await res.json();
-    if(!data.success)throw new Error(data.error);
-    renderCV(payload,data.cv);
-  }catch(err){console.error(err);renderFB(payload)}
-  setTimeout(()=>{go(5);btn.disabled=false},3200);
-}
-
-function fillH(p){
-  const parts=p.name.trim().split(' ');
-  const ini=parts.length>=2?parts[0][0]+parts[parts.length-1][0]:p.name.slice(0,2);
-  document.getElementById('cA').textContent=ini;
-  document.getElementById('cN').textContent=p.name;
-  document.getElementById('cJ').textContent=p.jobTitle;
-  let ct='';if(p.phone)ct+=`<span>${p.phone}</span>`;if(p.email)ct+=`<span>${p.email}</span>`;if(p.city)ct+=`<span>${p.city}</span>`;
-  document.getElementById('cC').innerHTML=ct;
-  // Apply template
-  const doc=document.getElementById('cvDoc');
-  doc.className='cv-doc tpl-'+tpl;
-}
-
-function renderCV(p,cv){
-  fillH(p);
-  document.getElementById('cS').textContent=cv.summary||'';
-  const ex=document.getElementById('cE');ex.innerHTML='';
-  (cv.experience||[]).forEach(e=>{ex.innerHTML+=`<div class="cv-ent"><div class="cv-ent-row"><div class="cv-ent-t">${e.title}</div><div class="cv-ent-d">${e.duration}</div></div><div class="cv-ent-o">${e.company}</div><div class="cv-ent-p">${e.description}</div></div>`});
-  document.getElementById('cEd').innerHTML=`<div class="cv-ent"><div class="cv-ent-t">${cv.education?.degree||p.eduLevel+' — '+p.edu}</div><div class="cv-ent-o">${cv.education?.institution||''}</div></div>`;
-  const sk=document.getElementById('cSk');sk.innerHTML='';
-  (cv.skills||[]).forEach(s=>{sk.innerHTML+=`<span class="cv-sk">${s}</span>`});
-  const lg=document.getElementById('cL');lg.innerHTML='';
-  (cv.languages||['العربية — اللغة الأم','الإنجليزية — جيد']).forEach(l=>{lg.innerHTML+=`<span class="cv-lang">${l}</span>`});
-}
-
-function renderFB(p){
-  fillH(p);
-  document.getElementById('cS').textContent=`محترف في مجال ${p.sector}، أمتلك خبرة ${p.exp}، أسعى لشغل منصب ${p.targetJob||p.jobTitle} والمساهمة في تحقيق أهداف المؤسسة. ${p.highlight||'أتمتع بمهارات قيادية وقدرة على العمل ضمن الفريق.'}`;
-  document.getElementById('cE').innerHTML=`<div class="cv-ent"><div class="cv-ent-row"><div class="cv-ent-t">${p.lastJob}</div><div class="cv-ent-d">حتى الآن</div></div><div class="cv-ent-o">${p.city||''}</div><div class="cv-ent-p">تحقيق الأهداف وتطوير العمليات والمساهمة في نمو المؤسسة بكفاءة.</div></div>`;
-  document.getElementById('cEd').innerHTML=`<div class="cv-ent"><div class="cv-ent-t">${p.eduLevel}</div><div class="cv-ent-o">${p.edu||''}</div></div>`;
-  const sk=document.getElementById('cSk');sk.innerHTML='';
-  const sl=p.skills?p.skills.split(/[,،]/).map(s=>s.trim()).filter(Boolean):['التواصل','حل المشكلات'];
-  sl.forEach(s=>{sk.innerHTML+=`<span class="cv-sk">${s}</span>`});
-  document.getElementById('cL').innerHTML='<span class="cv-lang">العربية — اللغة الأم</span><span class="cv-lang">الإنجليزية — جيد</span>';
-}
-
-function unlock(){
-  document.getElementById('cvArea').classList.remove('blur');
-  document.getElementById('pwSec').style.display='none';
-  document.getElementById('dlSec').classList.add('show');
-  window.scrollTo({top:0,behavior:'smooth'});
-}
-
-async function dlPDF(){
-  const btn=document.getElementById('dlBtn');btn.disabled=true;btn.textContent='⏳ جاري إنشاء الملف...';
-  try{
-    const{jsPDF}=window.jspdf;const el=document.getElementById('cvDoc');
-    const ow=el.style.width;el.style.width='210mm';
-    const canvas=await html2canvas(el,{scale:2,useCORS:true,backgroundColor:'#ffffff',logging:false});
-    el.style.width=ow;
-    const img=canvas.toDataURL('image/jpeg',0.92);
-    const pdf=new jsPDF('p','mm','a4');
-    const w=pdf.internal.pageSize.getWidth(),h=(canvas.height*w)/canvas.width;
-    pdf.addImage(img,'JPEG',0,0,w,h);
-    const nm=(document.getElementById('cN').textContent||'CV').trim().replace(/\s+/g,'_');
-    pdf.save(`سيرة_ذاتية_${nm}.pdf`);
-  }catch(e){alert('حدث خطأ. يرجى المحاولة مرة أخرى.');console.error(e)}
-  btn.disabled=false;btn.textContent='⬇ تحميل السيرة الذاتية PDF';
-}
-</script>
+<footer data-t="footer">© ٢٠٢٦ مساري — جميع الحقوق محفوظة. مصمم لسوق العمل السعودي.</footer>
+<script src="app.js"></script>
 </body>
 </html>
