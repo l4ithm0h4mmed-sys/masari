@@ -369,7 +369,7 @@
       highlight: document.getElementById('highlight').value
     };
     try {
-      const res = await fetch('/api/generate', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) });
+      const res = await fetch('https://masari-bice.vercel.app/api/generate', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) });
       const data = await res.json();
       if(!data.success) throw new Error(data.error);
       renderCV(payload, data.cv);
