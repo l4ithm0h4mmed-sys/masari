@@ -1,18 +1,17 @@
 // === MASARI — Bilingual App Logic ===
 let lang = 'ar';
 let tpl = 'classic';
+let unlocked = false;
+let lastCvData = null;
+let lastPayload = null;
 
 const T = {
   ar: {
-    navTag:'مدعوم بالذكاء الاصطناعي',trustText:'انضم لأكثر من +٢,٥٠٠ باحث عن عمل في السعودية',
-    heroTitle:'سيرة ذاتية احترافية<br/><em>تُكتب لك بالذكاء الاصطناعي</em>',
-    heroDesc:'أجب على أسئلة بسيطة → اختر التصميم → حمّل سيرتك PDF<br/>كل هالشي في أقل من دقيقتين.',
+    navTag:'سيرتك في دقيقتين',trustText:'انضم لأكثر من +٢,٥٠٠ باحث عن عمل في السعودية',
+    heroTitle:'سيرة ذاتية احترافية<br/><em>تكتب نفسها في دقيقتين</em>',
+    heroDesc:'أجب على أسئلة بسيطة → اختر التصميم → حمّل سيرتك PDF<br/>بدون كتابة، بدون تعقيد، بس جاوب وحمّل.',
     st1v:'٣ قوالب',st1l:'تصميم احترافي',st2v:'دقيقتين',st2l:'وقت الإنشاء',st3v:'٣٥ ريال',st3l:'فقط',
-    revTitle:'ماذا يقول مستخدمونا',
-    r1q:'سيرتي الذاتية صارت احترافية وقدرت أقدم على وظائف بثقة. شكراً مساري!',r1w:'سارة م. — الرياض',
-    r2q:'الذكاء الاصطناعي كتب لي ملخص مهني أفضل مما كنت أتوقع.',r2w:'فهد ع. — جدة',
-    r3q:'مساري الوحيد اللي يفهم السوق السعودي ويكتب بعربي سليم.',r3w:'نورة ك. — الدمام',
-    r4q:'خريج جديد وسهّل لي الموضوع بشكل كبير.',r4w:'عمر ح. — المدينة',
+    r4q:'',r4w:'',
     tplTitle:'اختر تصميم سيرتك الذاتية',tplDesc:'كل القوالب متوافقة مع أنظمة التوظيف ATS',
     tpn1:'كلاسيكي',tpd1:'رسمي — قطاع حكومي',tpn2:'عصري',tpd2:'ملفت — قطاع خاص',tpn3:'بسيط',tpd3:'أنيق — كل المجالات',
     step1:'الخطوة ١ من ٣',step2:'الخطوة ٢ من ٣',step3:'الخطوة ٣ من ٣',step4:'جاري الإنشاء...',step5:'سيرتك جاهزة!',
@@ -21,7 +20,7 @@ const T = {
     lName:'الاسم الكامل <span class="rq">*</span>',lJob:'المسمى الوظيفي <span class="rq">*</span>',
     lPhone:'رقم الجوال <span class="rq">*</span>',lEmail:'البريد الإلكتروني <span class="rq">*</span>',
     lCity:'المدينة',lNat:'الجنسية',
-    phName:'محمد عبدالله الأحمد',phJob:'مهندس برمجيات',phPhone:'+966 5X XXX XXXX',phCity:'الرياض',phNat:'سعودي',
+    phName:'محمد عبدالله الأحمد',phJob:'مهندس برمجيات',phPhone:'5X XXX XXXX',phCity:'الرياض',phNat:'سعودي',
     btn1:'التالي — الخبرة والتعليم ←',btnBack:'→ رجوع',
     p2Title:'الخبرة والتعليم',p2Desc:'خلفيتك المهنية والأكاديمية',
     lLastJob:'آخر وظيفة شغلتها <span class="rq">*</span>',lExp:'سنوات الخبرة',lEduLvl:'مستوى التعليم',
@@ -38,13 +37,18 @@ const T = {
     btnGen:'أنشئ سيرتي الذاتية 🪄',
     loadTitle:'الذكاء الاصطناعي يكتب سيرتك...',loadDesc:'محتوى مخصص لسوق العمل السعودي',
     ls1:'تحليل بياناتك',ls2:'كتابة الملخص المهني',ls3:'صياغة الخبرات',ls4:'تنسيق السيرة النهائية',
+    optBadge:'ميزة حصرية',optTitle:'تحسين السيرة لوظيفة محددة',
+    optDesc:'الصق وصف الوظيفة المستهدفة وسيرتك راح تنكتب عشان هالوظيفة بالذات',
+    optBtn:'🎯 حسّن سيرتي لهالوظيفة',phJobDesc:'الصق الوصف الوظيفي هنا...',
+    optProgress:'⚙️ جاري تحسين سيرتك...',optDone:'✅ تم تحسين سيرتك بنجاح!',optError:'فشل التحسين. يرجى المحاولة مرة أخرى.',
+    optEmpty:'يرجى لصق الوصف الوظيفي أولاً',
     cvSum:'الملخص المهني',cvExp:'الخبرة العملية',cvEdu:'التعليم',cvSk:'المهارات',cvLn:'اللغات',
     pwTitle:'سيرتك جاهزة — حمّلها الآن',pwDesc:'ادفع مرة واحدة وحمّل سيرتك كملف PDF احترافي جاهز للإرسال.',
     price:'٣٥',cur:'ريال',priceNote:'دفعة واحدة — بدون اشتراك',priceBadge:'👌 أرخص من كوب قهوة',
     f1:'تحميل PDF بجودة عالية',f2:'صياغة ذكية بالعربي',f3:'متوافق مع أنظمة ATS',f4:'تعديل وإعادة تحميل مجاناً',
     payBtn:'ادفع ٣٥ ريال وحمّل سيرتك',
     dlBadge:'✓ تم الدفع — سيرتك جاهزة',dlText:'⬇ تحميل السيرة الذاتية PDF',
-    dlNote:'ملف PDF جاهز للإرفاق في LinkedIn وطاقات',newCv:'← إنشاء سيرة جديدة',
+    dlNote:'ملف PDF جاهز للإرفاق في LinkedIn وطاقات',editBtn:'✏️ تعديل السيرة الذاتية',newCv:'← إنشاء سيرة جديدة',
     footer:'© ٢٠٢٦ مساري — جميع الحقوق محفوظة. مصمم لسوق العمل السعودي.',
     errRequired:'يرجى تعبئة جميع الحقول المطلوبة',errEmail:'يرجى إدخال بريد إلكتروني صحيح',
     errJob:'يرجى كتابة آخر وظيفة شغلتها',errTarget:'يرجى تحديد الوظيفة المستهدفة',
@@ -54,15 +58,11 @@ const T = {
     langAr:'العربية — اللغة الأم',langEn:'الإنجليزية — جيد'
   },
   en: {
-    navTag:'AI-Powered',trustText:'Join 2,500+ job seekers in Saudi Arabia',
-    heroTitle:'Professional CV<br/><em>Written by AI in Minutes</em>',
-    heroDesc:'Answer simple questions → Pick a template → Download your PDF CV<br/>All in under 2 minutes.',
+    navTag:'Your CV in 2 Minutes',trustText:'Join 2,500+ job seekers in Saudi Arabia',
+    heroTitle:'A Professional CV<br/><em>That Writes Itself in Minutes</em>',
+    heroDesc:'Answer simple questions → Pick a template → Download your PDF CV<br/>No writing. No hassle. Just answer and download.',
     st1v:'3 Templates',st1l:'Professional Design',st2v:'2 Minutes',st2l:'Creation Time',st3v:'35 SAR',st3l:'Only',
-    revTitle:'What Our Users Say',
-    r1q:'My CV became so professional. I applied to jobs with confidence. Thank you Masari!',r1w:'Sarah M. — Riyadh',
-    r2q:'The AI wrote me a better professional summary than I ever could. Fastest CV builder.',r2w:'Fahad A. — Jeddah',
-    r3q:'Masari is the only platform that truly understands the Saudi job market.',r3w:'Noura K. — Dammam',
-    r4q:'As a fresh graduate, I had no idea how to write a CV. Masari made it so easy.',r4w:'Omar H. — Madinah',
+    r4q:'',r4w:'',
     tplTitle:'Choose Your CV Template',tplDesc:'All templates are ATS-compatible',
     tpn1:'Classic',tpd1:'Formal — Government',tpn2:'Modern',tpd2:'Eye-catching — Private Sector',tpn3:'Minimal',tpd3:'Elegant — All Fields',
     step1:'Step 1 of 3',step2:'Step 2 of 3',step3:'Step 3 of 3',step4:'Generating...',step5:'Your CV is ready!',
@@ -71,7 +71,7 @@ const T = {
     lName:'Full Name <span class="rq">*</span>',lJob:'Job Title <span class="rq">*</span>',
     lPhone:'Phone Number <span class="rq">*</span>',lEmail:'Email Address <span class="rq">*</span>',
     lCity:'City',lNat:'Nationality',
-    phName:'Mohammed Abdullah',phJob:'Software Engineer',phPhone:'+966 5X XXX XXXX',phCity:'Riyadh',phNat:'Saudi',
+    phName:'Mohammed Abdullah',phJob:'Software Engineer',phPhone:'5X XXX XXXX',phCity:'Riyadh',phNat:'Saudi',
     btn1:'Next — Experience & Education →',btnBack:'← Back',
     p2Title:'Experience & Education',p2Desc:'Your professional and academic background',
     lLastJob:'Last Job Title <span class="rq">*</span>',lExp:'Years of Experience',lEduLvl:'Education Level',
@@ -88,13 +88,18 @@ const T = {
     btnGen:'Generate My CV 🪄',
     loadTitle:'AI is writing your CV...',loadDesc:'Creating personalized content for the Saudi job market',
     ls1:'Analyzing your data',ls2:'Writing professional summary',ls3:'Crafting experience section',ls4:'Finalizing layout',
+    optBadge:'Exclusive Feature',optTitle:'Optimize CV for a Specific Job',
+    optDesc:'Paste the job description and your CV will be rewritten specifically for that role',
+    optBtn:'🎯 Optimize My CV for This Job',phJobDesc:'Paste the job description here...',
+    optProgress:'⚙️ Optimizing your CV...',optDone:'✅ CV optimized successfully!',optError:'Optimization failed. Please try again.',
+    optEmpty:'Please paste a job description first',
     cvSum:'Professional Summary',cvExp:'Work Experience',cvEdu:'Education',cvSk:'Skills',cvLn:'Languages',
     pwTitle:'Your CV is Ready — Download Now',pwDesc:'Pay once and download your professional PDF CV, ready to send.',
     price:'35',cur:'SAR',priceNote:'One-time payment — No subscription',priceBadge:'👌 Cheaper than a coffee',
     f1:'High-quality PDF download',f2:'Smart AI-written content',f3:'ATS-compatible format',f4:'Free edits & re-downloads',
     payBtn:'Pay 35 SAR & Download Your CV',
     dlBadge:'✓ Payment Complete — CV Ready',dlText:'⬇ Download CV as PDF',
-    dlNote:'PDF ready for LinkedIn, Taqat, and job portals',newCv:'→ Create New CV',
+    dlNote:'PDF ready for LinkedIn, Taqat, and job portals',editBtn:'✏️ Edit Your CV',newCv:'→ Create New CV',
     footer:'© 2026 Masari — All rights reserved. Designed for the Saudi job market.',
     errRequired:'Please fill in all required fields',errEmail:'Please enter a valid email address',
     errJob:'Please enter your last job title',errTarget:'Please specify your target job',
@@ -177,7 +182,7 @@ function getPayload() {
   return {
     name: document.getElementById('name').value || (lang==='ar'?'المستخدم':'User'),
     jobTitle: document.getElementById('jobTitle').value,
-    phone: document.getElementById('phone').value,
+    phone: (document.getElementById('phoneCode')?.value||'+966') + ' ' + document.getElementById('phone').value,
     email: document.getElementById('email').value,
     city: document.getElementById('city').value,
     nationality: document.getElementById('nationality').value,
@@ -206,8 +211,19 @@ async function gen() {
     const data = await res.json();
     if(!data.success) throw new Error(data.error);
     renderCV(payload, data.cv);
-  } catch(err) { console.error(err); renderFB(payload); }
-  setTimeout(() => { go(5); btn.disabled = false; }, 3200);
+    lastCvData = data.cv;
+    lastPayload = payload;
+  } catch(err) { console.error(err); renderFB(payload); lastPayload = payload; }
+  setTimeout(() => {
+    go(5);
+    btn.disabled = false;
+    // If already paid, skip paywall on regenerate
+    if(unlocked) {
+      document.getElementById('cvA').classList.remove('blur');
+      document.getElementById('pwS').style.display = 'none';
+      document.getElementById('dlS').classList.add('show');
+    }
+  }, 3200);
 }
 
 function fillH(p) {
@@ -250,10 +266,41 @@ function renderFB(p) {
 }
 
 function unlock() {
+  unlocked = true;
   document.getElementById('cvA').classList.remove('blur');
   document.getElementById('pwS').style.display = 'none';
   document.getElementById('dlS').classList.add('show');
   window.scrollTo({top:0,behavior:'smooth'});
+}
+
+function editCV() {
+  go(1);
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+async function optimizeCV() {
+  const jd = document.getElementById('jobDesc').value.trim();
+  if(!jd) { alert(t('optEmpty')); return; }
+  const btn = document.getElementById('optBtn');
+  btn.disabled = true; btn.textContent = t('optProgress');
+  try {
+    const res = await fetch('/api/optimize', {
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({ cvData: lastCvData, jobDescription: jd, lang: lang })
+    });
+    const data = await res.json();
+    if(!data.success) throw new Error(data.error);
+    lastCvData = data.cv;
+    renderCV(lastPayload, data.cv);
+    btn.textContent = t('optDone');
+    setTimeout(() => { btn.textContent = t('optBtn'); }, 3000);
+  } catch(err) {
+    console.error(err);
+    alert(t('optError'));
+    btn.textContent = t('optBtn');
+  }
+  btn.disabled = false;
 }
 
 async function dlPDF() {

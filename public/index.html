@@ -172,23 +172,31 @@ body.en .pfl{text-align:left}
 .dl.show{display:block;animation:fu .5s ease}
 .dlb{display:inline-flex;align-items:center;gap:8px;background:var(--acg);color:var(--ac2);border:1px solid rgba(0,212,145,.2);padding:10px 20px;border-radius:30px;font-size:14px;font-weight:600;margin-bottom:1.5rem}
 .dln{font-size:12px;color:var(--t3);margin-top:10px;font-weight:500}
+.phone-row{display:flex;gap:8px;align-items:stretch}
+.phone-row select{width:110px;flex-shrink:0;padding:11px 8px;border:1.5px solid var(--b2);border-radius:var(--rs);font-family:inherit;font-size:13px;color:var(--t);background:var(--bg);outline:none;transition:all var(--tr);direction:ltr;text-align:center}
+.phone-row select:focus{border-color:var(--ac);background:#FFF;box-shadow:0 0 0 3px var(--acg)}
+.phone-row input{flex:1}
+.btn-edit{background:transparent;color:var(--ac);border:1.5px solid var(--ac);margin-top:12px;font-size:14px}
+.btn-edit:hover{background:var(--acg);color:var(--ac2)}
+.opt-card{background:var(--s);border:2px dashed var(--ac);border-radius:var(--r);padding:1.5rem;margin-top:1.5rem;text-align:center}
+.opt-card h3{font-size:16px;font-weight:700;margin-bottom:4px}
+.opt-card p{font-size:13px;color:var(--t2);margin-bottom:1rem}
+.opt-card textarea{width:100%;padding:12px;border:1.5px solid var(--b2);border-radius:var(--rs);font-family:inherit;font-size:13px;min-height:100px;resize:vertical;outline:none;line-height:1.7;transition:all var(--tr)}
+body.en .opt-card textarea{direction:ltr;text-align:left}
+.opt-card textarea:focus{border-color:var(--ac);box-shadow:0 0 0 3px var(--acg)}
+.opt-card .btn{margin-top:10px}
+.opt-badge{display:inline-block;font-size:11px;font-weight:600;color:#FFF;background:linear-gradient(135deg,#F59E0B,#F97316);padding:3px 10px;border-radius:12px;margin-bottom:10px}
 footer{text-align:center;padding:2rem 1rem;font-size:12px;color:var(--t3);border-top:1px solid var(--b);background:var(--s);font-weight:500}
 </style>
 </head>
 <body>
-<div class="nav"><div class="nav-logo">مساري<i>.</i></div><div class="nav-r"><button class="lang-btn" onclick="toggleLang()" id="langBtn">English</button><div class="nav-tag" data-t="navTag">مدعوم بالذكاء الاصطناعي</div></div></div>
+<div class="nav"><div class="nav-logo">مساري<i>.</i></div><div class="nav-r"><button class="lang-btn" onclick="toggleLang()" id="langBtn">English</button><div class="nav-tag" data-t="navTag">سيرتك في دقيقتين</div></div></div>
 <div class="hero">
 <div class="tp"><div class="ds"><div class="d">م</div><div class="d">ن</div><div class="d">ع</div><div class="d">أ</div></div><span data-t="trustText">انضم لأكثر من +٢,٥٠٠ باحث عن عمل في السعودية</span></div>
-<h1 data-t="heroTitle">سيرة ذاتية احترافية<br/><em>تُكتب لك بالذكاء الاصطناعي</em></h1>
-<p data-t="heroDesc">أجب على أسئلة بسيطة → اختر التصميم → حمّل سيرتك PDF<br/>كل هالشي في أقل من دقيقتين.</p>
+<h1 data-t="heroTitle">سيرة ذاتية احترافية<br/><em>تكتب نفسها في دقيقتين</em></h1>
+<p data-t="heroDesc">أجب على أسئلة بسيطة → اختر التصميم → حمّل سيرتك PDF<br/>بدون كتابة، بدون تعقيد، بس جاوب وحمّل.</p>
 <div class="hst"><div class="hs"><strong data-t="st1v">٣ قوالب</strong><span data-t="st1l">تصميم احترافي</span></div><div class="hs"><strong data-t="st2v">دقيقتين</strong><span data-t="st2l">وقت الإنشاء</span></div><div class="hs"><strong data-t="st3v">٣٥ ريال</strong><span data-t="st3l">فقط</span></div></div>
 </div>
-<div class="revs"><h3 data-t="revTitle">ماذا يقول مستخدمونا</h3><div class="rg">
-<div class="rv"><div class="rv-s">★★★★★</div><q data-t="r1q">سيرتي الذاتية صارت احترافية وقدرت أقدم على وظائف بثقة. شكراً مساري!</q><div class="rv-w" data-t="r1w">سارة م. — الرياض</div></div>
-<div class="rv"><div class="rv-s">★★★★★</div><q data-t="r2q">الذكاء الاصطناعي كتب لي ملخص مهني أفضل مما كنت أتوقع. أسرع طريقة لإنشاء CV.</q><div class="rv-w" data-t="r2w">فهد ع. — جدة</div></div>
-<div class="rv"><div class="rv-s">★★★★★</div><q data-t="r3q">جربت مواقع كثيرة بس مساري الوحيد اللي يفهم السوق السعودي ويكتب بعربي سليم.</q><div class="rv-w" data-t="r3w">نورة ك. — الدمام</div></div>
-<div class="rv"><div class="rv-s">★★★★★</div><q data-t="r4q">خريج جديد وما كنت أعرف أكتب سيرة. مساري سهّل لي الموضوع بشكل كبير.</q><div class="rv-w" data-t="r4w">عمر ح. — المدينة</div></div>
-</div></div>
 <div class="tps"><h2 data-t="tplTitle">اختر تصميم سيرتك الذاتية</h2><p data-t="tplDesc">كل القوالب متوافقة مع أنظمة التوظيف ATS</p>
 <div class="tg">
 <div class="tc sel" onclick="pickTpl('classic',this)"><div class="tpv"><div class="tpv-lines"><div class="tpv-l ac"></div><div class="tpv-l w90"></div><div class="tpv-l w70"></div><div class="tpv-l w50"></div><div class="tpv-l w30"></div></div></div><div class="tn" data-t="tpn1">كلاسيكي</div><div class="td" data-t="tpd1">رسمي — قطاع حكومي</div></div>
@@ -200,7 +208,7 @@ footer{text-align:center;padding:2rem 1rem;font-size:12px;color:var(--t3);border
 <div class="mcv" id="miniCV"><div class="mcv-h" data-t="livePreview">معاينة مباشرة</div><div class="mcv-b"><div class="mav" id="mAv">—</div><div><div class="mn" id="mN" data-t="yourName">اسمك سيظهر هنا</div><div class="mr" id="mR"></div></div></div></div>
 <div id="p1"><div class="fc"><div class="fh"><div class="fi">👤</div><div><h2 data-t="p1Title">المعلومات الشخصية</h2><p data-t="p1Desc">البيانات الأساسية في أعلى السيرة</p></div></div>
 <div class="row"><div class="f"><label data-t="lName">الاسم الكامل <span class="rq">*</span></label><input id="name" data-ph="phName" placeholder="محمد عبدالله الأحمد" oninput="updateMini()"/></div><div class="f"><label data-t="lJob">المسمى الوظيفي <span class="rq">*</span></label><input id="jobTitle" data-ph="phJob" placeholder="مهندس برمجيات" oninput="updateMini()"/></div></div>
-<div class="row"><div class="f"><label data-t="lPhone">رقم الجوال <span class="rq">*</span></label><input id="phone" data-ph="phPhone" placeholder="+966 5X XXX XXXX" type="tel" dir="ltr" style="text-align:right"/></div><div class="f"><label data-t="lEmail">البريد الإلكتروني <span class="rq">*</span></label><input id="email" type="email" placeholder="name@email.com" dir="ltr" style="text-align:right"/></div></div>
+<div class="row"><div class="f"><label data-t="lPhone">رقم الجوال <span class="rq">*</span></label><div class="phone-row"><select id="phoneCode"><option value="+966">🇸🇦 +966</option><option value="+971">🇦🇪 +971</option><option value="+965">🇰🇼 +965</option><option value="+974">🇶🇦 +974</option><option value="+973">🇧🇭 +973</option><option value="+968">🇴🇲 +968</option><option value="+962">🇯🇴 +962</option><option value="+20">🇪🇬 +20</option><option value="+44">🇬🇧 +44</option><option value="+1">🇺🇸 +1</option><option value="+91">🇮🇳 +91</option><option value="+92">🇵🇰 +92</option><option value="+63">🇵🇭 +63</option></select><input id="phone" data-ph="phPhone" placeholder="5X XXX XXXX" type="tel" dir="ltr" style="text-align:left" maxlength="12"/></div></div><div class="f"><label data-t="lEmail">البريد الإلكتروني <span class="rq">*</span></label><input id="email" type="email" placeholder="name@email.com" dir="ltr" style="text-align:left"/></div></div>
 <div class="row"><div class="f"><label data-t="lCity">المدينة</label><input id="city" data-ph="phCity" placeholder="الرياض"/></div><div class="f"><label data-t="lNat">الجنسية</label><input id="nationality" data-ph="phNat" placeholder="سعودي"/></div></div>
 </div><div id="e1" class="em hidden"></div>
 <button class="btn bg" onclick="vStep(1)" data-t="btn1">التالي — الخبرة والتعليم ←</button></div>
@@ -237,7 +245,16 @@ footer{text-align:center;padding:2rem 1rem;font-size:12px;color:var(--t3);border
 <div class="dl" id="dlS"><div class="dlb" data-t="dlBadge">✓ تم الدفع — سيرتك جاهزة</div>
 <button class="btn bg" id="dlBtn" style="font-size:17px;padding:16px;max-width:400px;margin:0 auto" onclick="dlPDF()" data-t="dlText">⬇ تحميل السيرة الذاتية PDF</button>
 <div class="dln" data-t="dlNote">ملف PDF جاهز للإرفاق في LinkedIn وطاقات</div>
-<button class="btn bo" onclick="go(1)" style="margin-top:1.5rem;max-width:400px;margin-left:auto;margin-right:auto" data-t="newCv">← إنشاء سيرة جديدة</button></div>
+<button class="btn btn-edit" onclick="editCV()" style="max-width:400px;margin-left:auto;margin-right:auto" data-t="editBtn">✏️ تعديل السيرة الذاتية</button>
+<button class="btn bo" onclick="go(1)" style="margin-top:0;max-width:400px;margin-left:auto;margin-right:auto" data-t="newCv">← إنشاء سيرة جديدة</button>
+<div class="opt-card" id="optCard">
+<div class="opt-badge" data-t="optBadge">ميزة حصرية</div>
+<h3 data-t="optTitle">تحسين السيرة لوظيفة محددة</h3>
+<p data-t="optDesc">الصق وصف الوظيفة المستهدفة وسيرتك راح تنكتب عشان هالوظيفة بالذات</p>
+<textarea id="jobDesc" data-ph="phJobDesc" placeholder="الصق الوصف الوظيفي هنا..."></textarea>
+<button class="btn bg" id="optBtn" onclick="optimizeCV()" data-t="optBtn">🎯 حسّن سيرتي لهالوظيفة</button>
+</div>
+</div>
 </div></div>
 </div>
 <footer data-t="footer">© ٢٠٢٦ مساري — جميع الحقوق محفوظة. مصمم لسوق العمل السعودي.</footer>
